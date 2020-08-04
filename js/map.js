@@ -1,5 +1,4 @@
 
-
 const nbLignes = 10;
 const nbColonnes = 10;
 let x = 0;

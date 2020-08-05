@@ -29,7 +29,7 @@ class Map {
             }  
         }    
     }
-    // Fonction de génération des cases obstacles dans la map vide
+    // Méthode de génération des cases obstacles dans la map vide
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
             let cases = document.getElementsByTagName('td');

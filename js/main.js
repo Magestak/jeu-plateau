@@ -14,6 +14,11 @@ $(document).ready(function(){
     // Insertion des armes dans la map
     newMap.insererArmesMap(tableauArmes); // Méthode class Map (fichier map.js)
 
+    // Création des joueurs avec la class Player
+    const joueurA = new Player("Joueur A", 100, baton);
+    const joueurB = new Player("Joueur B", 100, baton);
+    // On crée un tableau avec les joueurs qui seront positionnés sur la map
+    const tableauJoueurs = [joueurA, joueurB];
 
 });
 

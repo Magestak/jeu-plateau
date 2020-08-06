@@ -29,18 +29,35 @@ class Map {
             }  
         }    
     }
-    // Méthode de génération des cases obstacles dans la map vide
+    // Méthode de génération des cases obstacles sur la map vide
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
             let cases = document.getElementsByTagName('td');
             let casesAleatoires = Math.floor(Math.random() * cases.length);
             let caseNoire = cases[casesAleatoires];
-            // Pour ne pas générer 2 fois le même numéro de case
-            if (casesAleatoires == caseNoire) {
+            // Pour avoir le bon nombre de cases obstacles et pas de doublon
+            if (caseNoire.classList.contains('casesObstacles')) {
                 i--;
+            } else {
+                // On attribue la classe "casesObstacles" aux cases sélectionnées aléatoirement
+                caseNoire.classList.add('casesObstacles');
             }
-            // On attribue la classe "casesObstacles" aux cases sélectionnées aléatoirement
-            caseNoire.classList.add('casesObstacles');
+        }
+    }
+    // Méthode de positionnement des armes sur la map
+    insererArmesMap(tableauArmes) {
+        for (let i = 0; i < tableauArmes.length; i++) {
+            let cases = document.getElementsByTagName('td');
+            let casesAleatoires = Math.floor(Math.random() * cases.length);
+            let caseArme = cases[casesAleatoires];
+            // Pour ne pas attribuer d'armes sur une case noire ou si une arme est déjà présente sur la case
+            if (caseArme.classList.contains('casesObstacles') || (caseArme.classList.contains('casesArmes'))) {
+                i--;
+            } else {
+                // On attribue la classe "casesArmes" aux cases sélectionnées aléatoirement
+                caseArme.classList.add('casesArmes');
+                caseArme.innerHTML = tableauArmes[i].nom;
+            }
         }
     }
 }

@@ -60,4 +60,26 @@ class Map {
             }
         }
     }
+    insererJoueursMap(tableauJoueurs) {
+        for (let i = 0; i < tableauJoueurs.length; i++) {
+            let cases = document.getElementsByTagName('td');
+            let casesAleatoires = Math.floor(Math.random() * cases.length);
+            let caseJoueur = cases[casesAleatoires];
+            // let distanceJoueur = 0; // test
+
+            if ((caseJoueur.classList.contains('casesObstacles')) 
+            || (caseJoueur.classList.contains('casesArmes')) 
+            || (caseJoueur.classList.contains('casesJoueurs'))) {
+                i--;
+            } else {
+                caseJoueur.classList.add('casesJoueurs');
+                caseJoueur.innerHTML = tableauJoueurs[i].nom;
+                console.log(casesAleatoires); // A ENLEVER (Aide)
+                console.log(caseJoueur.id); // A ENLEVER (Aide)
+                console.log(tableauJoueurs[i]); // A ENLEVER (Aide)
+            }
+            // distanceJoueur = casesAleatoires; //test
+            // console.log(distanceJoueur);// test    
+        }
+    }
 }

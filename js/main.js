@@ -19,6 +19,8 @@ $(document).ready(function(){
     const joueurB = new Player("Joueur B", 100, baton);
     // On crée un tableau avec les joueurs qui seront positionnés sur la map
     const tableauJoueurs = [joueurA, joueurB];
+    // Insertion des joueurs dans la map
+    newMap.insererJoueursMap(tableauJoueurs);
 
 });
 

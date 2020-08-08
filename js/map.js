@@ -61,11 +61,12 @@ class Map {
         }
     }
     insererJoueursMap(tableauJoueurs) {
+        let distanceJoueur = 0; // test
         for (let i = 0; i < tableauJoueurs.length; i++) {
             let cases = document.getElementsByTagName('td');
             let casesAleatoires = Math.floor(Math.random() * cases.length);
             let caseJoueur = cases[casesAleatoires];
-            // let distanceJoueur = 0; // test
+            // console.log(distanceJoueur);// test    
 
             if ((caseJoueur.classList.contains('casesObstacles')) 
             || (caseJoueur.classList.contains('casesArmes')) 
@@ -75,11 +76,17 @@ class Map {
                 caseJoueur.classList.add('casesJoueurs');
                 caseJoueur.innerHTML = tableauJoueurs[i].nom;
                 console.log(casesAleatoires); // A ENLEVER (Aide)
-                console.log(caseJoueur.id); // A ENLEVER (Aide)
                 console.log(tableauJoueurs[i]); // A ENLEVER (Aide)
+                distanceJoueur = casesAleatoires - distanceJoueur; //test voir pour la positionner plus haut ??
+                console.log(Math.abs(distanceJoueur)); // Test
+                if ((Math.abs(distanceJoueur) <= 12)) {
+                    caseJoueur.innerHTML = ""; // test
+                    caseJoueur.classList.remove('casesJoueurs'); // test
+                    distanceJoueur = casesAleatoires - distanceJoueur; // Test ATTENTION voir si besoin de recalculer sa valeur ??
+                    console.log(distanceJoueur);
+                    i--;
+                }    
             }
-            // distanceJoueur = casesAleatoires; //test
-            // console.log(distanceJoueur);// test    
         }
     }
 }

@@ -33,7 +33,7 @@ class Map {
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
             let cases = document.getElementsByTagName('td');
-            let casesAleatoires = Math.floor(Math.random() * cases.length);
+            let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
             let caseNoire = cases[casesAleatoires];
             // Pour avoir le bon nombre de cases obstacles et pas de doublon
             if (caseNoire.classList.contains('casesObstacles')) {
@@ -48,7 +48,7 @@ class Map {
     insererArmesMap(tableauArmes) {
         for (let i = 0; i < tableauArmes.length; i++) {
             let cases = document.getElementsByTagName('td');
-            let casesAleatoires = Math.floor(Math.random() * cases.length);
+            let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
             let caseArme = cases[casesAleatoires];
             // Pour ne pas attribuer d'armes sur une case noire ou si une arme est déjà présente sur la case
             if (caseArme.classList.contains('casesObstacles') || (caseArme.classList.contains('casesArmes'))) {
@@ -60,30 +60,32 @@ class Map {
             }
         }
     }
+    // Méthode de positionnement des joueurs sur la map
     insererJoueursMap(tableauJoueurs) {
-        let distanceJoueur = 0; // test
+        let distanceJoueur = 0; // Déclaration de la variable pour s'assurer de l'éloignement des 2 joueurs
         for (let i = 0; i < tableauJoueurs.length; i++) {
             let cases = document.getElementsByTagName('td');
-            let casesAleatoires = Math.floor(Math.random() * cases.length);
+            let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
             let caseJoueur = cases[casesAleatoires];
-            // console.log(distanceJoueur);// test    
-
+            // Si la case générée aléatoirement contient déjà un obstacle, une arme ou un joueur
             if ((caseJoueur.classList.contains('casesObstacles')) 
             || (caseJoueur.classList.contains('casesArmes')) 
             || (caseJoueur.classList.contains('casesJoueurs'))) {
-                i--;
+                i--; // On recommence le calcul d'une case aléatoire
             } else {
+                // On attribue la classe "casesJoueurs"
                 caseJoueur.classList.add('casesJoueurs');
                 caseJoueur.innerHTML = tableauJoueurs[i].nom;
-                console.log(casesAleatoires); // A ENLEVER (Aide)
-                console.log(tableauJoueurs[i]); // A ENLEVER (Aide)
-                distanceJoueur = casesAleatoires - distanceJoueur; //test voir pour la positionner plus haut ??
-                console.log(Math.abs(distanceJoueur)); // Test
+                // On calcule la distance entre les 2 cases joueurs
+                distanceJoueur = casesAleatoires - distanceJoueur;
+                // Si la distance est inférieure à 12 cases
                 if ((Math.abs(distanceJoueur) <= 12)) {
-                    caseJoueur.innerHTML = ""; // test
-                    caseJoueur.classList.remove('casesJoueurs'); // test
-                    distanceJoueur = casesAleatoires - distanceJoueur; // Test ATTENTION voir si besoin de recalculer sa valeur ??
-                    console.log(distanceJoueur);
+                    // On vide la dernière case de son contenu et on efface la classe "casesJoueurs"
+                    caseJoueur.innerHTML = "";
+                    caseJoueur.classList.remove('casesJoueurs');
+                    // On annule le calcul de la distance avec cette case
+                    distanceJoueur = casesAleatoires - distanceJoueur;
+                    // On recommence le calcul d'une nouvelle case pour ce joueur
                     i--;
                 }    
             }

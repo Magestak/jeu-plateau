@@ -77,17 +77,19 @@ class Map {
                 caseJoueur.classList.add('casesJoueurs');
                 caseJoueur.innerHTML = tableauJoueurs[i].nom;
                 // On calcule la distance entre les 2 cases joueurs
-                distanceJoueur = casesAleatoires - distanceJoueur;
+                distanceJoueur = casesAleatoires - distanceJoueur; // Utile pour le positionnement du 2ème joueur au 2ème tour de boucle
+                if (i > 0) { // On teste le positionnement du 2ème joueur
                 // Si la distance est inférieure à 12 cases
-                if ((Math.abs(distanceJoueur) <= 12)) {
-                    // On vide la dernière case de son contenu et on efface la classe "casesJoueurs"
-                    caseJoueur.innerHTML = "";
-                    caseJoueur.classList.remove('casesJoueurs');
-                    // On annule le calcul de la distance avec cette case
-                    distanceJoueur = casesAleatoires - distanceJoueur;
-                    // On recommence le calcul d'une nouvelle case pour ce joueur
-                    i--;
-                }    
+                    if ((Math.abs(distanceJoueur) <= 12)) {
+                        // On vide la dernière case de son contenu et on efface la classe "casesJoueurs"
+                        caseJoueur.innerHTML = "";
+                        caseJoueur.classList.remove('casesJoueurs');
+                        // On annule le calcul de la distance avec cette case
+                        distanceJoueur = casesAleatoires - distanceJoueur;
+                        // On recommence le calcul d'une nouvelle case pour ce joueur
+                        i--;
+                    }    
+                }
             }
         }
     }

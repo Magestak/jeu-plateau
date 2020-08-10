@@ -29,12 +29,17 @@ class Map {
             }  
         }    
     }
+    // Méthode de génération de cases aléatoires pour les autres méthodes
+    genererCasesAleatoires() {
+        let cases = document.getElementsByTagName('td');
+        let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
+        return cases[casesAleatoires]; // Retourne une case aléatoire dans la grille
+}
     // Méthode de génération des cases obstacles sur la map vide
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
-            let cases = document.getElementsByTagName('td');
-            let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
-            let caseNoire = cases[casesAleatoires];
+            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires
+            let caseNoire = this.genererCasesAleatoires();
             // Pour avoir le bon nombre de cases obstacles et pas de doublon
             if (caseNoire.classList.contains('casesObstacles')) {
                 i--;
@@ -47,9 +52,8 @@ class Map {
     // Méthode de positionnement des armes sur la map
     insererArmesMap(tableauArmes) {
         for (let i = 0; i < tableauArmes.length; i++) {
-            let cases = document.getElementsByTagName('td');
-            let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
-            let caseArme = cases[casesAleatoires];
+            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires
+            let caseArme = this.genererCasesAleatoires();
             // Pour ne pas attribuer d'armes sur une case noire ou si une arme est déjà présente sur la case
             if (caseArme.classList.contains('casesObstacles') || (caseArme.classList.contains('casesArmes'))) {
                 i--;

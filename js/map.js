@@ -18,6 +18,7 @@ class Map {
             for (let j = 0; j < this.nbColonnes; j++) {
                 const tdElt = document.createElement('td');
                 tdElt.id = this.y + '-' + this.x;
+                tdElt.classList.add("casesAccessibles"); // On ajoute la classe css "casesAccessibles"
                 document.getElementById(`line-${this.y}`).appendChild(tdElt);
                 this.x++; // Remplir vers la droite
         
@@ -44,7 +45,9 @@ class Map {
             if (caseNoire.classList.contains('casesObstacles')) {
                 i--;
             } else {
-                // On attribue la classe "casesObstacles" aux cases sélectionnées aléatoirement
+                // On retire la classe css "casesAccessibles" à la case tirée aléatoirement
+                caseNoire.classList.remove('casesAccessibles');
+                // On attribue la classe css "casesObstacles" aux cases sélectionnées aléatoirement
                 caseNoire.classList.add('casesObstacles');
             }
         }
@@ -58,7 +61,7 @@ class Map {
             if (caseArme.classList.contains('casesObstacles') || (caseArme.classList.contains('casesArmes'))) {
                 i--;
             } else {
-                // On attribue la classe "casesArmes" aux cases sélectionnées aléatoirement
+                // On attribue la classe css "casesArmes" aux cases sélectionnées aléatoirement
                 caseArme.classList.add('casesArmes');
                 caseArme.innerHTML = tableauArmes[i].nom;
             }
@@ -77,7 +80,7 @@ class Map {
             || (caseJoueur.classList.contains('casesJoueurs'))) {
                 i--; // On recommence le calcul d'une case aléatoire
             } else {
-                // On attribue la classe "casesJoueurs"
+                // On attribue la classe css "casesJoueurs"
                 caseJoueur.classList.add('casesJoueurs');
                 caseJoueur.innerHTML = tableauJoueurs[i].nom;
                 // On calcule la distance entre les 2 cases joueurs

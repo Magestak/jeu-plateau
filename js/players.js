@@ -7,9 +7,9 @@ class Player {
         this.coordonnees = [];
     }
     set coord(value) {
-        this.coordonnees.push(value);
+        this.coordonnees = value;
     }
     get coord() {
-        return this.coordonnees[this.coordonnees.length - 1];
+        return this.coordonnees;
     }
 }

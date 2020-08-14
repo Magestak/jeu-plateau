@@ -27,46 +27,47 @@ class Map {
                     this.y++; // On descend d'une ligne
                     this.x = 0; // On recommence à gauche
                 }
-            }  
-        }    
+            }
+        }
     }
     // Méthode de génération de cases aléatoires pour les autres méthodes
     genererCasesAleatoires() {
         let cases = document.getElementsByTagName('td');
         let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire
         return cases[casesAleatoires]; // Retourne une case aléatoire dans la grille
-}
+    }
     // Méthode de génération des cases obstacles sur la map vide
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
-            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires
-            let caseNoire = this.genererCasesAleatoires();
-            // Pour avoir le bon nombre de cases obstacles et pas de doublon
-            if (caseNoire.classList.contains('casesObstacles')) {
-                i--;
-            } else {
-                // On retire la classe css "casesAccessibles" à la case tirée aléatoirement
-                caseNoire.classList.remove('casesAccessibles');
-                // On attribue la classe css "casesObstacles" aux cases sélectionnées aléatoirement
-                caseNoire.classList.add('casesObstacles');
-            }
+            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`
+            // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`
+            const caseNoire = recupererCaseAleatoire.call(this, function verifieLaCase(caseGenere) {
+                return !caseGenere.classList.contains('casesObstacles');
+            });
+
+            // On retire la classe css "casesAccessibles" à la case tirée aléatoirement
+            caseNoire.classList.remove('casesAccessibles');
+            // On attribue la classe css "casesObstacles" aux cases sélectionnées aléatoirement
+            caseNoire.classList.add('casesObstacles');
         }
     }
     // Méthode de positionnement des armes sur la map
     insererArmesMap(tableauArmes) {
-        for (let i = 0; i < tableauArmes.length; i++) {
-            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires
-            let caseArme = this.genererCasesAleatoires();
-            // Pour ne pas attribuer d'armes sur une case noire ou si une arme est déjà présente sur la case
-            if (caseArme.classList.contains('casesObstacles') || (caseArme.classList.contains('casesArmes'))) {
-                i--;
-            } else {
-                // On attribue la classe css "casesArmes" aux cases sélectionnées aléatoirement
-                caseArme.classList.add('casesArmes');
-                caseArme.innerHTML = tableauArmes[i].nom;
-            }
-        }
+        tableauArmes.forEach(arme => {
+            // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`
+            // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`
+            const caseArme = recupererCaseAleatoire.call(this, function verifieLaCase(caseGenere) {
+                return (
+                    !caseGenere.classList.contains('casesObstacles') &&
+                    !caseGenere.classList.contains('casesArmes')
+                )
+            });
+            // On attribue la classe css "casesArmes" aux cases sélectionnées aléatoirement
+            caseArme.classList.add('casesArmes');
+            caseArme.innerHTML = arme.nom;
+        });
     }
+
     // Méthode de positionnement des joueurs sur la map
     insererJoueursMap(tableauJoueurs) {
         let distanceJoueur = 0; // Déclaration de la variable pour s'assurer de l'éloignement des 2 joueurs
@@ -92,7 +93,7 @@ class Map {
                 distanceJoueur = casesAleatoires - distanceJoueur; // Utile pour le positionnement du 2ème joueur au 2ème tour de boucle
                 if (i > 0) { // On teste le positionnement du 2ème joueur
                 // Si la distance est inférieure à 12 cases
-                    if ((Math.abs(distanceJoueur) <= 12)) {
+                    if (Math.abs(distanceJoueur) <= 12) {
                         // On vide la dernière case de son contenu et on efface la classe "casesJoueurs"
                         caseJoueur.innerHTML = "";
                         caseJoueur.classList.remove('casesJoueurs');
@@ -101,7 +102,7 @@ class Map {
                         distanceJoueur = casesAleatoires - distanceJoueur;
                         // On recommence le calcul d'une nouvelle case pour ce joueur
                         i--;
-                    }    
+                    }
                 }
             }
         }

@@ -80,9 +80,14 @@ class Map {
             || (caseJoueur.classList.contains('casesJoueurs'))) {
                 i--; // On recommence le calcul d'une case aléatoire
             } else {
+                console.log(caseJoueur);
+                let idJoueur = caseJoueur.id.split('-'); //TEST//////////////////////
+                console.log(idJoueur); //TEST///////////////////////////
                 // On attribue la classe css "casesJoueurs"
                 caseJoueur.classList.add('casesJoueurs');
                 caseJoueur.innerHTML = tableauJoueurs[i].nom;
+                tableauJoueurs[i].coord = idJoueur.map(Number); //TEST//////////////////////
+                console.log(tableauJoueurs[i].coord); //TEST/////////////////////
                 // On calcule la distance entre les 2 cases joueurs
                 distanceJoueur = casesAleatoires - distanceJoueur; // Utile pour le positionnement du 2ème joueur au 2ème tour de boucle
                 if (i > 0) { // On teste le positionnement du 2ème joueur
@@ -91,6 +96,7 @@ class Map {
                         // On vide la dernière case de son contenu et on efface la classe "casesJoueurs"
                         caseJoueur.innerHTML = "";
                         caseJoueur.classList.remove('casesJoueurs');
+                        tableauJoueurs[i].coord = [];// TEST///////////////////////
                         // On annule le calcul de la distance avec cette case
                         distanceJoueur = casesAleatoires - distanceJoueur;
                         // On recommence le calcul d'une nouvelle case pour ce joueur

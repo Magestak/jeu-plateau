@@ -21,8 +21,8 @@ $(document).ready(function() {
     const tableauJoueurs = [joueurA, joueurB];
     // Insertion des joueurs dans la map
     newMap.insererJoueursMap(tableauJoueurs);
-    console.log(joueurA.coordonnees); // TEST///////////////////
-    console.log(joueurB.coordonnees); // TEST///////////////////
+    console.log(joueurA.coord); // TEST///////////////////
+    console.log(joueurB.coord); // TEST///////////////////
 
 });
 

@@ -12,8 +12,8 @@ class Player {
     get coord() {
         const coords = this._coordonnees;
         return {
-            x: coords[1],
-            y: coords[0]
+            x: coords[0],
+            y: coords[1]
         };
     }
 }

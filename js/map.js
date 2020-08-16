@@ -17,7 +17,7 @@ class Map {
             // Création des cellules
             for (let j = 0; j < this.nbColonnes; j++) {
                 const tdElt = document.createElement('td');
-                tdElt.id = this.y + '-' + this.x;
+                tdElt.id = this.x + '-' + this.y;
                 tdElt.classList.add("casesAccessibles"); // On ajoute la classe css "casesAccessibles"
                 document.getElementById(`line-${this.y}`).appendChild(tdElt);
                 this.x++; // Remplir vers la droite
@@ -83,10 +83,10 @@ class Map {
                     // ni que cette case soit adjacente à une autre case joueur
                     verifierCasesAdjacentes(caseGeneree, coords => {
                         return [
-                            $(`#${coords.y}-${coords.x - 1}`),
-                            $(`#${coords.y}-${coords.x + 1}`),
-                            $(`#${coords.y - 1}-${coords.x}`),
-                            $(`#${coords.y + 1}-${coords.x}`)
+                            $(`#${coords.x - 1}-${coords.y}`),
+                            $(`#${coords.x + 1}-${coords.y}`),
+                            $(`#${coords.x}-${coords.y - 1}`),
+                            $(`#${coords.x}-${coords.y + 1}`)
                         ].reduce((prev, curr) => {
                             if (!prev) return false;
                             if (curr.length === 0) return true;

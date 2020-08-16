@@ -25,9 +25,9 @@ function recupererCaseAleatoire(verificateur) {
 function verifierCasesAdjacentes(caseAVerifier, verificateur) {
     const coords = caseAVerifier.id.split('-').reduce((prev, curr, idx) => {
         if (idx === 0)
-            return { ...prev, y: Number(curr) };
-        if (idx === 1)
             return { ...prev, x: Number(curr) };
+        if (idx === 1)
+            return { ...prev, y: Number(curr) };
     }, {});
 
     return verificateur(coords);

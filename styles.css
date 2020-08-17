@@ -33,3 +33,6 @@ tr, td {
 .casesAccessibles {
     
 }
+.casesSurbrillance {
+    box-shadow: orange 0px 0px 10px 3px inset;
+}

@@ -22,12 +22,13 @@ $(document).ready(function() {
     // Insertion des joueurs dans la map
     newMap.insererJoueursMap(tableauJoueurs);
 
-    joueurA.casesPossiblesDeplacement(joueurA); // TEST////////////////////
-    joueurA.deplacementJoueur(joueurA); // TEST//////////////////
+    // Gestion du déplacement au tour par tour 
+    // Tant que les joueurs ne sont pas proches pour un combat, la boucle tourne pour les déplacements 
+    // => Boucle While ou do while ou simple for?
+    /*do { 
+        joueurA.casesPossiblesDeplacement(joueurA);
+    } while (joueurA.deplacementJoueur(joueurA) == false);*/
+    joueurA.casesPossiblesDeplacement(joueurA);
+    joueurA.deplacementJoueur(joueurA);
 
 });
-
-/*
-window.onload = function() {
-
-}*/

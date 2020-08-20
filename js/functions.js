@@ -30,5 +30,5 @@ function verifierCasesAdjacentes(caseAVerifier, verificateur) {
             return { ...prev, y: Number(curr) };
     }, {});
 
-    return verificateur(coords);
+    return verificateur(coords, caseAVerifier);
 }

@@ -30,6 +30,9 @@ class Game{
 
         // Insertion des joueurs dans la map
         this.map.insererJoueursMap(this.joueurs);
+
+        // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`
+        $('td').each((idx, cellule) => cellule.addEventListener('click', this.onCellClick.bind(this)));
     }
 
     /**
@@ -38,6 +41,16 @@ class Game{
     demarrer() {
         this.etat = ETAT_DEPLACEMENT;
         this.joueurs[this.indexJoueurActuel].casesPossiblesDeplacement();
+    }
+
+    onCellClick(event) {
+        const cellule = event.target;
+        if (!cellule.classList.contains('casesSurbrillance')) return;
+        if (this.etat !== ETAT_DEPLACEMENT) return;
+        
+        const joueurActuel = this.joueurs[this.indexJoueurActuel];
+
+        this.deplacer(joueurActuel, cellule);
     }
 
     /**
@@ -62,13 +75,15 @@ class Game{
      * @param { HTMLElement } cellule
      */
     deplacer(joueur, cellule) {
-        // On récupère l'id de la case cliquée.
-        let $newPosJoueurId = cellule.id.split('-');
-        // On converti l'id pour récupérer les nouvelles coordonnées de la case joueur.
-        let newPosJoueur = $newPosJoueurId.map(Number);
+        // On efface les cases en surbrillance.
+        this.map.viderCasesSurbrillance();
+
+        // On récupère les coordonnées de la case cliquée.
+        const newPosJoueur = extraireCoordonneesId(cellule);
 
         // On récupère les coordonnées de la case actuelle du joueur (avant déplacement).
         const positionActuelle = joueur.coord;
+
         // On récupère la case actuelle en fonction des coordonnées actuelles.
         const $caseActuelle = $(`#${positionActuelle.x}-${positionActuelle.y}`);
 
@@ -76,34 +91,32 @@ class Game{
         $caseActuelle.removeClass('casesJoueurs').html("");
 
         // On déplace le joueur sur la nouvelle case
-        joueur.coord = newPosJoueur;
+        joueur.coord = [newPosJoueur.x, newPosJoueur.y];
 
         // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
-        let $nouvelleCaseJoueur = $(`#${newPosJoueur[0]}-${newPosJoueur[1]}`);
+        let $nouvelleCaseJoueur = $(`#${newPosJoueur.x}-${newPosJoueur.y}`);
         $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.nom);
 
-        // TODO Vérifier si un autre joueur (joueurB) est collé à `joueur`.
-        // Si oui, Passer la game en mode combat
-        // Si non, finir le tour
+        // Vérifier si un autre joueur (joueurB) est collé à `joueur`
+        const joueurPotentiel = newVerifierCasesAdjacentes(
+            $nouvelleCaseJoueur[0],
+            (cellule, prev) => {
+                // Si la valeur précédente n'est pas un boolean (donc est une cellule)
+                if (typeof prev !== "boolean") return prev;
+                if (!cellule) return false;
+
+                // Renvoi de la cellule actuellement testée, ou de false
+                return cellule.classList.contains("casesJoueurs")
+                        ? cellule
+                        : false;
+            }
+        );
 
         // Si un joueur est trouvé dans les cases adjacentes
-        /*
-        if (verifierCasesAdjacentes($nouvelleCaseJoueur, coords => {
-            return [
-                $(`#${coords.x - 1}-${coords.y}`),
-                $(`#${coords.x + 1}-${coords.y}`),
-                $(`#${coords.x}-${coords.y - 1}`),
-                $(`#${coords.x}-${coords.y + 1}`)
-            ].reduce((prev, curr) => {
-                if (prev) return true;
-                if (curr.length === 0) return prev;
-                return curr.hasClass('casesJoueurs');
-            }, false);
-        }) === true){
+        if (joueurPotentiel !== false)
             this.etat = ETAT_COMBAT;
-        }
         
-        this.finirLeTour(); */
+        this.finirLeTour();
     }
 
     /**
@@ -122,15 +135,16 @@ class Game{
             case ETAT_INITIALISATION:
             default:
                 // Problem ?
+                console.log("DEFAULT CASE !");
                 break;
             case ETAT_DEPLACEMENT:
-                // this.indexJoueurActuel++;
+                this.indexJoueurActuel++;
                 if (this.indexJoueurActuel > this.joueurs.length - 1)
-                    this.indexJoueurActual = 0;
+                    this.indexJoueurActuel = 0;
                 this.joueurs[this.indexJoueurActuel].casesPossiblesDeplacement();
                 break;
             case ETAT_COMBAT:
-
+                console.log("FIGHT CASE !");
                 break;
         }
     }

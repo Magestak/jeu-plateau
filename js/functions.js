@@ -32,3 +32,29 @@ function verifierCasesAdjacentes(caseAVerifier, verificateur) {
 
     return verificateur(coords, caseAVerifier);
 }
+
+/**
+ * @param { HTMLElement } cellule
+ * @return { { x: number, y: number } }
+ */
+function extraireCoordonneesId(cellule) {
+    const coordsTableau = cellule.id.split('-').map(Number);
+    return { x: coordsTableau[0], y: coordsTableau[1] };
+}
+
+/**
+ * Renvoi `TRUE` si la `caseAVerifier` répond aux critères du `verificateur` (verificateur renvoi `TRUE`), sinon, renvoi false
+ * @param { HTMLElement } caseAVerifier
+ * @param { (coords: { x: number, y: number }, cellule?: HTMLElement) => boolean } verificateur
+ * @returns { boolean }
+ */
+function newVerifierCasesAdjacentes(caseAVerifier, verificateur) {
+    const coords = extraireCoordonneesId(caseAVerifier);
+
+    return [
+        $(`#${coords.x - 1}-${coords.y}`),
+        $(`#${coords.x + 1}-${coords.y}`),
+        $(`#${coords.x}-${coords.y - 1}`),
+        $(`#${coords.x}-${coords.y + 1}`)
+    ].reduce((prev, curr) => verificateur(curr[0], prev), false);
+}

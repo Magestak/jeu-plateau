@@ -95,7 +95,6 @@ class Map {
                     })
                 )
             });
-            console.log(caseJoueur); // A ENLEVER
             // On récupère l'ID de la case joueur en lui appliquant la méthode `.split`.
             let idJoueur = caseJoueur.id.split('-');
             // On attribue la classe css "casesJoueurs".
@@ -103,6 +102,12 @@ class Map {
             caseJoueur.innerHTML = joueur.nom;
             // on attribue l'ID de la case joueur à la propriété `coordonnées`du player avec la méthode `map`.
             joueur.coord = idJoueur.map(Number);
+        });
+    }
+
+    viderCasesSurbrillance() {
+        $('.casesSurbrillance').each((idx, cellule) => {
+            cellule.classList.remove('casesSurbrillance');
         });
     }
 }

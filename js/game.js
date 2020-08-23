@@ -5,7 +5,7 @@ const ETAT_COMBAT = 2;
 class Game{
     constructor() {
         this.etat = ETAT_INITIALISATION;
-        this.map = new Map(10, 10, 0, 0, 10); // création d'un nouvel objet avec la classe Map (fichier map.js)
+        this.map = new Map(10, 10, 0, 0, 10); // création d'un nouvel objet avec la classe Map.
         this.armes;
         this.joueurs;
         this.indexJoueurActuel = 0;
@@ -22,11 +22,11 @@ class Game{
 
         this.joueurs.forEach(joueur => joueur.game = this);
         
-        this.map.genererMapVide(); // Génère une map vide (fichier map.js)
-        this.map.genererCasesObstacles(); // Rajoute des cases obstacles sur la map vide (fichier map.js)
+        this.map.genererMapVide(); // Génère une map vide.
+        this.map.genererCasesObstacles(); // Rajoute des cases obstacles sur la map vide.
 
         // Insertion des armes dans la map
-        this.map.insererArmesMap(this.armes); // Méthode class Map (fichier map.js)
+        this.map.insererArmesMap(this.armes);
 
         // Insertion des joueurs dans la map
         this.map.insererJoueursMap(this.joueurs);
@@ -51,22 +51,6 @@ class Game{
         const joueurActuel = this.joueurs[this.indexJoueurActuel];
 
         this.deplacer(joueurActuel, cellule);
-    }
-
-    /**
-     * Permet au joueurA d'attaquer joueurB
-     * @param { Player } joueurA
-     * @param { Player } joueurB
-     */
-    attaquer(joueurA, joueurB) {
-        joueurB.sante -= joueurA.arme.degats;
-        if (joueurB.sante > 0) {
-            // Vivant
-            this.finirLeTour();
-        } else {
-            // Mort
-            this.finirLaPartie();
-        }
     }
 
     /**
@@ -115,8 +99,29 @@ class Game{
         // Si un joueur est trouvé dans les cases adjacentes
         if (joueurPotentiel !== false)
             this.etat = ETAT_COMBAT;
-        
+
+        //TODO: Si le joueur passe sur une case arme, il échange avec son arme actuelle (qu'il laisse à la place).
+        //      Attention si la case d'atterissage du joueur est une case contenant une arme?
+
+
         this.finirLeTour();
+    }
+
+    /**
+     * Permet au joueurA d'attaquer joueurB
+     * @param { Player } joueurA
+     * @param { Player } joueurB
+     */
+    attaquer(joueurA, joueurB) {
+        joueurB.sante -= joueurA.arme.degats;
+        if (joueurB.sante > 0) {
+            // Vivant
+            this.finirLeTour();
+        } else {
+            // Mort
+            this.finirLaPartie();
+        }
+        //TODO: Gérer le cas du joueur B qui attaque.
     }
 
     /**

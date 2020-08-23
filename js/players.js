@@ -61,10 +61,4 @@ class Player {
             $casePotentielle = $(`#${positionJoueur.x}-${positionJoueur.y - i}`);
         }
     }
-    
-    // Méthode de déplacement du joueur sur les cases potentielles.
-    deplacementJoueur() {
-        // Récupération de la case joueur.
-        let $positionJoueur = $(`#${this.coord.x}-${this.coord.y}`);
-    }
 }

@@ -31,6 +31,9 @@ class Game{
         // Insertion des joueurs dans la map
         this.map.insererJoueursMap(this.joueurs);
 
+        // Affichage des infos joueurs sur la page dans les parties réservées à chacun des joueurs.
+        this.afficherInfosJoueurs(this.joueurs);
+
         // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`
         $('td').each((idx, cellule) => cellule.addEventListener('click', this.onCellClick.bind(this)));
     }
@@ -57,13 +60,15 @@ class Game{
      * Déplace le joueur donné sur la cellule donnée
      * @param { Player } joueur
      * @param { HTMLElement } cellule
+     * @param { Weapon[] } armes
      */
-    deplacer(joueur, cellule) {
+    deplacer(joueur, cellule, armes) {
+
         // On efface les cases en surbrillance.
         this.map.viderCasesSurbrillance();
 
         // On récupère les coordonnées de la case cliquée.
-        const newPosJoueur = extraireCoordonneesId(cellule);
+        const nouvellePositionJoueur = extraireCoordonneesId(cellule);
 
         // On récupère les coordonnées de la case actuelle du joueur (avant déplacement).
         const positionActuelle = joueur.coord;
@@ -72,14 +77,48 @@ class Game{
         const $caseActuelle = $(`#${positionActuelle.x}-${positionActuelle.y}`);
 
         // On efface le contenu et la classe css de l'ancienne case joueur.
-        $caseActuelle.removeClass('casesJoueurs').html("");
+        $caseActuelle.removeClass('casesJoueurs').text("");
 
-        // On déplace le joueur sur la nouvelle case
-        joueur.coord = [newPosJoueur.x, newPosJoueur.y];
+        // On déplace le joueur sur la nouvelle case.
+        joueur.coord = [nouvellePositionJoueur.x, nouvellePositionJoueur.y];
+
+        // Pour gérer la récupération d'armes sur les cases, on récupère les cases de la map ayant la classe css casesArmes.
+        let $casesArmes = $('.casesArmes');
+
+        // On fait un tableau des coordonnées de toutes les cases armes.
+        let positionCasesArmes = [];
+        for (let i = 0; i < $casesArmes.length; i++) {
+            positionCasesArmes.push(extraireCoordonneesId($casesArmes[i]));
+        }
+
+        // On vérifie si une case arme est la case nouvelleCaseJoueur.
+        for (let j = 0; j < positionCasesArmes.length; j++) {
+            let caseArmeIdentifiee;
+            if ((positionCasesArmes[j].x == nouvellePositionJoueur.x) && (positionCasesArmes[j].y == nouvellePositionJoueur.y)) {
+                caseArmeIdentifiee = positionCasesArmes[j];
+
+                // On récupère le contenu de la case identifiée.
+                let $contenuCaseArme = $(`#${caseArmeIdentifiee.x}-${caseArmeIdentifiee.y}`);
+
+                // On transfère l'arme de la case identifiée dans une variable temporaire.
+                let $caseArmeTemporaire = $contenuCaseArme.html();
+
+                // On dépose l'arme du joueur dans la case ou se trouvait l'arme.
+                $contenuCaseArme = joueur.arme;
+                //TODO: Afficher l'arme échangée par le joueur lorsque celui-ci s'en va ???
+
+                // Le joueur récupère l'arme contenu dans la variable temporaire.
+                joueur.arme = $caseArmeTemporaire;
+
+                // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
+                $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
+            }
+        }
 
         // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
-        let $nouvelleCaseJoueur = $(`#${newPosJoueur.x}-${newPosJoueur.y}`);
-        $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.nom);
+        let $nouvelleCaseJoueur = $(`#${nouvellePositionJoueur.x}-${nouvellePositionJoueur.y}`);
+        $nouvelleCaseJoueur.addClass('casesJoueurs').text(joueur.nom);
+        console.log("JOUEUR ACTUEL: ", this.joueurs[this.indexJoueurActuel]);// TODO: A enlever.
 
         // Vérifier si un autre joueur (joueurB) est collé à `joueur`
         const joueurPotentiel = newVerifierCasesAdjacentes(
@@ -100,11 +139,20 @@ class Game{
         if (joueurPotentiel !== false)
             this.etat = ETAT_COMBAT;
 
-        //TODO: Si le joueur passe sur une case arme, il échange avec son arme actuelle (qu'il laisse à la place).
-        //      Attention si la case d'atterissage du joueur est une case contenant une arme?
-
-
         this.finirLeTour();
+    }
+
+    /**
+     * Permet d'afficher les infos des joueurs
+     * @param { Player } joueurs
+     */
+    // Permet d'afficher sur les cotés de la map, les infos des joueurs.
+    afficherInfosJoueurs(joueurs) {
+        //TODO: Voir si possible de déplacer cette méthode dans la class Player.
+        $('#santeJoueur0').text(this.joueurs[0].sante);
+        $('#armeJoueur0').text(this.joueurs[0].arme.nom);
+        $('#santeJoueur1').text(this.joueurs[1].sante);
+        $('#armeJoueur1').text(this.joueurs[1].arme.nom);
     }
 
     /**
@@ -113,6 +161,7 @@ class Game{
      * @param { Player } joueurB
      */
     attaquer(joueurA, joueurB) {
+        //TODO: Surveiller le paramètre joueur qui pourra être comme au dessus = joueurs.
         joueurB.sante -= joueurA.arme.degats;
         if (joueurB.sante > 0) {
             // Vivant

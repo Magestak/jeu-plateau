@@ -38,6 +38,8 @@ class Map {
     }
     // Méthode de génération des cases obstacles sur la map vide.
     genererCasesObstacles() {
+        //TODO: Pour éviter le joueur coincé dans 1 coin, voir pour limiter le nombre de cases les unes à la suite des autres,
+        //      ou bien voir pour recharger la page (reload) en dernier recours.
         for (let i = 0; i < this.casesObstacles; i++) {
             // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`.
             // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`.

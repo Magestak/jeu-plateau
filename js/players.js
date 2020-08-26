@@ -16,6 +16,7 @@ class Player {
     get coord() {
         return this._coordonnees;
     }
+
     // Méthode pour identifier les cases potentielles pour le déplacement du joueur.
     casesPossiblesDeplacement() {
         let positionJoueur = this.coord;

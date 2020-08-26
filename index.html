@@ -8,8 +8,18 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="wrapper">
-        <table id="gameMap"></table>
+    <div id="wrapper" class="w3-auto w3-row">
+        <div id="joueurA" class="w3-container w3-center w3-col m2">
+            <h2>Joueur A</h2>
+            <p>Points de vie: <span id="santeJoueur0"></span></p>
+            <p>Arme: <span id="armeJoueur0"></span></p>
+        </div>
+        <table id="gameMap" class="w3-col m8"></table>
+        <div id="joueurB" class="w3-container w3-center w3-col m2">
+            <h2>Joueur B</h2>
+            <p>Points de vie: <span id="santeJoueur1"></span></p>
+            <p>Arme: <span id="armeJoueur1"></span></p>
+        </div>
     </div>
 
     <script src="js/jquery.js"></script>

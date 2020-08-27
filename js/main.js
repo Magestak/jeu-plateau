@@ -24,4 +24,5 @@ $(document).ready(function () {
 
     // Débute la partie
     partie.demarrer();
+
 });

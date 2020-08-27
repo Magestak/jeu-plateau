@@ -60,9 +60,19 @@ class Game{
      * Déplace le joueur donné sur la cellule donnée
      * @param { Player } joueur
      * @param { HTMLElement } cellule
-     * @param { Weapon[] } armes
      */
-    deplacer(joueur, cellule, armes) {
+    deplacer(joueur, cellule) {
+        /*
+        // Pour gérer la récupération d'armes sur les cases, on récupère les cases de la map ayant la classe css casesArmes.
+        let $casesArmes = $('.casesArmes');
+        console.log("CONTENU CASES ARMES AU DEBUT DU TOUR: ", $casesArmes.text());
+
+        // On fait un tableau des coordonnées de toutes les cases armes.
+        let positionCasesArmes = [];
+        for (let i = 0; i < $casesArmes.length; i++) {
+            positionCasesArmes.push(extraireCoordonneesId($casesArmes[i]));
+        }*/
+        /////////////////////////////////////////////////////////////////
 
         // On efface les cases en surbrillance.
         this.map.viderCasesSurbrillance();
@@ -76,47 +86,43 @@ class Game{
         // On récupère la case actuelle en fonction des coordonnées actuelles.
         const $caseActuelle = $(`#${positionActuelle.x}-${positionActuelle.y}`);
 
-        // On efface le contenu et la classe css de l'ancienne case joueur.
+        // On efface la classe css de l'ancienne case joueur.
         $caseActuelle.removeClass('casesJoueurs').text("");
+        /*
+        if ($caseActuelle.hasClass('casesArmes')) {
+
+        } else {
+            $caseActuelle.text("");
+        } */
 
         // On déplace le joueur sur la nouvelle case.
         joueur.coord = [nouvellePositionJoueur.x, nouvellePositionJoueur.y];
 
-        // Pour gérer la récupération d'armes sur les cases, on récupère les cases de la map ayant la classe css casesArmes.
-        let $casesArmes = $('.casesArmes');
-
-        // On fait un tableau des coordonnées de toutes les cases armes.
-        let positionCasesArmes = [];
-        for (let i = 0; i < $casesArmes.length; i++) {
-            positionCasesArmes.push(extraireCoordonneesId($casesArmes[i]));
-        }
-
-        // On vérifie si une case arme est la case nouvelleCaseJoueur.
-        for (let j = 0; j < positionCasesArmes.length; j++) {
-            let caseArmeIdentifiee;
-            if ((positionCasesArmes[j].x == nouvellePositionJoueur.x) && (positionCasesArmes[j].y == nouvellePositionJoueur.y)) {
-                caseArmeIdentifiee = positionCasesArmes[j];
-
-                // On récupère le contenu de la case identifiée.
-                let $contenuCaseArme = $(`#${caseArmeIdentifiee.x}-${caseArmeIdentifiee.y}`);
-
-                // On transfère l'arme de la case identifiée dans une variable temporaire.
-                let $caseArmeTemporaire = $contenuCaseArme.html();
-
-                // On dépose l'arme du joueur dans la case ou se trouvait l'arme.
-                $contenuCaseArme = joueur.arme;
-                //TODO: Afficher l'arme échangée par le joueur lorsque celui-ci s'en va ???
-
-                // Le joueur récupère l'arme contenu dans la variable temporaire.
-                joueur.arme = $caseArmeTemporaire;
-
-                // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
-                $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
-            }
-        }
-
-        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
         let $nouvelleCaseJoueur = $(`#${nouvellePositionJoueur.x}-${nouvellePositionJoueur.y}`);
+
+        // Si la nouvelle case joueur est aussi une case contenant une arme.
+        if ($nouvelleCaseJoueur.hasClass('casesArmes')) {
+            // On retire l'arme de la case.
+            let $contenuCaseArme = $nouvelleCaseJoueur;
+            console.log("CONTENU CASE ARME NOUVELLE POSITION JOUEUR: ", $contenuCaseArme); // TODO: A enlever.
+
+            // On transfère l'arme dans une case temporaire.
+            let $caseArmeTemporaire = $contenuCaseArme.html();
+            console.log("RECUP DANS LA VARIABLE TEMPORAIRE: ", $caseArmeTemporaire); // TODO: A enlever.
+
+            // On dépose l'arme du joueur dans la case ou se trouvait l'arme.
+            $contenuCaseArme = joueur.arme;
+            // TODO: que faire de l'ancienne arme du joueur??? Impossible de la mettre dans la même case que le joueur??
+            console.log("DEPOT DE L'ARME DU JOUEUR: ", $contenuCaseArme); // TODO: A enlever.
+
+            // Le joueur récupère l'arme contenu dans la variable temporaire.
+            joueur.arme = $caseArmeTemporaire;
+            console.log("VALEUR JOUEUR.ARME APRES RECUP: ", joueur.arme); // TODO: A enlever.
+
+            // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
+            $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
+        }
+        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
         $nouvelleCaseJoueur.addClass('casesJoueurs').text(joueur.nom);
         console.log("JOUEUR ACTUEL: ", this.joueurs[this.indexJoueurActuel]);// TODO: A enlever.
 
@@ -136,8 +142,10 @@ class Game{
         );
 
         // Si un joueur est trouvé dans les cases adjacentes
-        if (joueurPotentiel !== false)
+        if (joueurPotentiel !== false) {
             this.etat = ETAT_COMBAT;
+            //this.combattre();
+        }
 
         this.finirLeTour();
     }
@@ -155,13 +163,16 @@ class Game{
         $('#armeJoueur1').text(this.joueurs[1].arme.nom);
     }
 
+    combattre() {
+
+    }
+
     /**
      * Permet au joueurA d'attaquer joueurB
      * @param { Player } joueurA
      * @param { Player } joueurB
      */
     attaquer(joueurA, joueurB) {
-        //TODO: Surveiller le paramètre joueur qui pourra être comme au dessus = joueurs.
         joueurB.sante -= joueurA.arme.degats;
         if (joueurB.sante > 0) {
             // Vivant
@@ -170,7 +181,7 @@ class Game{
             // Mort
             this.finirLaPartie();
         }
-        //TODO: Gérer le cas du joueur B qui attaque.
+        //TODO: Gérer le cas du joueur B qui attaque ?
     }
 
     /**

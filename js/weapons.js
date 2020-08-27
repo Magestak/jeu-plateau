@@ -4,4 +4,5 @@ class Weapon {
         // this.visuel = visuel; A RAJOUTER
         this.degats = degats;
     }
+
 }

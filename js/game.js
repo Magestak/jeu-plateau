@@ -9,6 +9,15 @@ class Game{
         this.armes;
         this.joueurs;
         this.indexJoueurActuel = 0;
+
+        // Récupérer les boutons depuis leur ID
+        this.boutons = [{
+            attaquer: $('#btnAttaqueJoueur0'),
+            defendre: $('#btnDefenseJoueur0')
+        }, {
+            attaquer: $('#btnAttaqueJoueur1'),
+            defendre: $('#btnDefenseJoueur1')
+        }];
     }
 
     /**
@@ -36,6 +45,22 @@ class Game{
 
         // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`
         $('td').each((idx, cellule) => cellule.addEventListener('click', this.onCellClick.bind(this)));
+
+        // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.
+        this.boutons.forEach(pair => {
+            pair.attaquer.on('click', () => this.attaquer(this.joueurActuel, this.autreJoueur));
+            pair.defendre.on('click', () => this.defendre(this.joueurActuel, this.autreJoueur));
+        });
+    }
+
+    get joueurActuel() { 
+        return this.joueurs[this.indexJoueurActuel];
+    }
+    get indexAutreJoueur() {
+        return this.indexJoueurActuel === 0 ? 1 : 0;
+    }
+    get autreJoueur() {
+        return this.joueurs[this.indexAutreJoueur];
     }
 
     /**
@@ -46,6 +71,7 @@ class Game{
         this.joueurs[this.indexJoueurActuel].casesPossiblesDeplacement();
     }
 
+    // Méthode pour la gestion de l'évènement "click" sur les cases.
     onCellClick(event) {
         const cellule = event.target;
         if (!cellule.classList.contains('casesSurbrillance')) return;
@@ -62,69 +88,52 @@ class Game{
      * @param { HTMLElement } cellule
      */
     deplacer(joueur, cellule) {
-        /*
-        // Pour gérer la récupération d'armes sur les cases, on récupère les cases de la map ayant la classe css casesArmes.
-        let $casesArmes = $('.casesArmes');
-        console.log("CONTENU CASES ARMES AU DEBUT DU TOUR: ", $casesArmes.text());
-
-        // On fait un tableau des coordonnées de toutes les cases armes.
-        let positionCasesArmes = [];
-        for (let i = 0; i < $casesArmes.length; i++) {
-            positionCasesArmes.push(extraireCoordonneesId($casesArmes[i]));
-        }*/
-        /////////////////////////////////////////////////////////////////
-
         // On efface les cases en surbrillance.
         this.map.viderCasesSurbrillance();
 
         // On récupère les coordonnées de la case cliquée.
         const nouvellePositionJoueur = extraireCoordonneesId(cellule);
+        // On récupère la nouvelle case en fonction des nouvelles coordonnées.
+        const $nouvelleCaseJoueur = $(`#${nouvellePositionJoueur.x}-${nouvellePositionJoueur.y}`);
 
         // On récupère les coordonnées de la case actuelle du joueur (avant déplacement).
         const positionActuelle = joueur.coord;
-
         // On récupère la case actuelle en fonction des coordonnées actuelles.
         const $caseActuelle = $(`#${positionActuelle.x}-${positionActuelle.y}`);
-
+        
         // On efface la classe css de l'ancienne case joueur.
-        $caseActuelle.removeClass('casesJoueurs').text("");
-        /*
-        if ($caseActuelle.hasClass('casesArmes')) {
+        $caseActuelle.removeClass('casesJoueurs');
 
-        } else {
+        // Quand on part d'une case ou il y avait une arme (affichage de l'ancienne arme du joueur)
+        if ($caseActuelle.hasClass('casesArmes')) {
+            // Récupération de l'arme au sol
+            const armePrecedente = this.armes.find(arme => arme.coord?.x === positionActuelle.x && arme.coord?.y === positionActuelle.y);
+            // Affichage de l'arme au sol
+            if (armePrecedente)
+                $caseActuelle.text(armePrecedente.nom);
+        } else
             $caseActuelle.text("");
-        } */
 
         // On déplace le joueur sur la nouvelle case.
         joueur.coord = [nouvellePositionJoueur.x, nouvellePositionJoueur.y];
 
-        let $nouvelleCaseJoueur = $(`#${nouvellePositionJoueur.x}-${nouvellePositionJoueur.y}`);
-
         // Si la nouvelle case joueur est aussi une case contenant une arme.
         if ($nouvelleCaseJoueur.hasClass('casesArmes')) {
-            // On retire l'arme de la case.
-            let $contenuCaseArme = $nouvelleCaseJoueur;
-            console.log("CONTENU CASE ARME NOUVELLE POSITION JOUEUR: ", $contenuCaseArme); // TODO: A enlever.
-
-            // On transfère l'arme dans une case temporaire.
-            let $caseArmeTemporaire = $contenuCaseArme.html();
-            console.log("RECUP DANS LA VARIABLE TEMPORAIRE: ", $caseArmeTemporaire); // TODO: A enlever.
-
-            // On dépose l'arme du joueur dans la case ou se trouvait l'arme.
-            $contenuCaseArme = joueur.arme;
-            // TODO: que faire de l'ancienne arme du joueur??? Impossible de la mettre dans la même case que le joueur??
-            console.log("DEPOT DE L'ARME DU JOUEUR: ", $contenuCaseArme); // TODO: A enlever.
-
-            // Le joueur récupère l'arme contenu dans la variable temporaire.
-            joueur.arme = $caseArmeTemporaire;
-            console.log("VALEUR JOUEUR.ARME APRES RECUP: ", joueur.arme); // TODO: A enlever.
+            // Quand on arrive sur une case arme (échange des armes - non-visuel sur le plateau mais changement sur les côtés)
+            const armeSuivante = this.armes.find(arme => arme.coord?.x === nouvellePositionJoueur.x && arme.coord?.y === nouvellePositionJoueur.y);
+            if (armeSuivante) {
+                const armeDropee = joueur.arme;
+                // On remplace dans le tableau `this.armes` l'arme que va récupérer le joueur, par l'arme dont il était équipé.
+                this.armes.splice(this.armes.indexOf(armeSuivante), 1, armeDropee);
+                armeDropee.coord = nouvellePositionJoueur;
+                armeSuivante.joueur = joueur;
+            }
 
             // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
             $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
         }
         // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
         $nouvelleCaseJoueur.addClass('casesJoueurs').text(joueur.nom);
-        console.log("JOUEUR ACTUEL: ", this.joueurs[this.indexJoueurActuel]);// TODO: A enlever.
 
         // Vérifier si un autre joueur (joueurB) est collé à `joueur`
         const joueurPotentiel = newVerifierCasesAdjacentes(
@@ -144,6 +153,12 @@ class Game{
         // Si un joueur est trouvé dans les cases adjacentes
         if (joueurPotentiel !== false) {
             this.etat = ETAT_COMBAT;
+
+            // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs
+            this.boutons.forEach(pair => {
+                pair.attaquer[0].disabled = false;
+                pair.defendre[0].disabled = false;
+            });
             //this.combattre();
         }
 
@@ -164,16 +179,19 @@ class Game{
     }
 
     combattre() {
-
+        this.attaquer(this.joueurActuel, this.autreJoueur);
     }
 
     /**
      * Permet au joueurA d'attaquer joueurB
-     * @param { Player } joueurA
-     * @param { Player } joueurB
+     * @param { Player } joueurA Joueur qui attaque
+     * @param { Player } joueurB Joueur qui EST attaqué
      */
     attaquer(joueurA, joueurB) {
         joueurB.sante -= joueurA.arme.degats;
+
+        // On actualise la santé dans les infos joueurs sur les côtés.
+        $("#santeJoueur" + this.indexJoueurActuel).text(joueurB.sante);
         if (joueurB.sante > 0) {
             // Vivant
             this.finirLeTour();
@@ -181,7 +199,6 @@ class Game{
             // Mort
             this.finirLaPartie();
         }
-        //TODO: Gérer le cas du joueur B qui attaque ?
     }
 
     /**
@@ -210,6 +227,10 @@ class Game{
                 break;
             case ETAT_COMBAT:
                 console.log("FIGHT CASE !");
+                this.indexJoueurActuel++;
+                if (this.indexJoueurActuel > this.joueurs.length - 1)
+                    this.indexJoueurActuel = 0;
+                //this.combattre();
                 break;
         }
     }

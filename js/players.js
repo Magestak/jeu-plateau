@@ -1,7 +1,7 @@
 class Player {
     constructor(nom, sante, arme,) {
         this.nom = nom;
-        //this.visuel = visuel; A RAJOUTER
+        //this.visuel = visuel; // TODO: A RAJOUTER
         this.sante = sante;
         this.arme = arme;
         this._coordonnees = {};
@@ -61,5 +61,9 @@ class Player {
             i++;
             $casePotentielle = $(`#${positionJoueur.x}-${positionJoueur.y - i}`);
         }
+    }
+
+    toString() {
+        return this.nom;
     }
 }

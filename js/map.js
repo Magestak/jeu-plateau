@@ -66,6 +66,7 @@ class Map {
                 )
             });
             // On attribue la classe css "casesArmes" aux cases sélectionnées aléatoirement.
+            arme.coord = extraireCoordonneesId(caseArme);
             caseArme.classList.add('casesArmes');
             caseArme.innerHTML = arme.nom;
         });

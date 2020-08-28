@@ -30,6 +30,8 @@
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/players.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/players.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/weapons.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/weapons.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +60,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="gitlive.settings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -81,7 +83,8 @@
       <updated>1598026869953</updated>
       <workItem from="1598026871436" duration="1538000" />
       <workItem from="1598028750599" duration="80179000" />
-      <workItem from="1598455032790" duration="28420000" />
+      <workItem from="1598455032790" duration="30264000" />
+      <workItem from="1598549330212" duration="12999000" />
     </task>
     <servers />
   </component>
@@ -233,10 +236,10 @@
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1050/-1920.63.1920.1057@0.23.1792.1050" timestamp="1598423902190" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1051/-1920.63.1920.1057@0.23.1792.1051" timestamp="1598423240897" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1052/-1920.63.1920.1057@0.23.1792.1052" timestamp="1598455008395" />
-    <state x="397" y="186" key="SettingsEditor" timestamp="1598437122236">
-      <screen x="0" y="23" width="1792" height="1051" />
+    <state x="397" y="185" key="SettingsEditor" timestamp="1598598294452">
+      <screen x="0" y="23" width="1792" height="1046" />
     </state>
-    <state x="397" y="185" key="SettingsEditor/0.23.1792.1046/-1920.63.1920.1057@0.23.1792.1046" timestamp="1598026948947" />
+    <state x="397" y="185" key="SettingsEditor/0.23.1792.1046/-1920.63.1920.1057@0.23.1792.1046" timestamp="1598598294452" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1047/-1920.63.1920.1057@0.23.1792.1047" timestamp="1598028729664" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1047@0.23.1792.1047" timestamp="1598046440018" />
     <state x="397" y="186" key="SettingsEditor/0.23.1792.1051/-1920.63.1920.1057@0.23.1792.1051" timestamp="1598437122236" />

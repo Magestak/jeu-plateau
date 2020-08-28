@@ -27,12 +27,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f474206b-8087-4fcf-bdb1-2a840fc40aaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/map.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/players.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/players.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/weapons.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/weapons.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +82,9 @@
       <workItem from="1598026871436" duration="1538000" />
       <workItem from="1598028750599" duration="80179000" />
       <workItem from="1598455032790" duration="30264000" />
-      <workItem from="1598549330212" duration="12999000" />
+      <workItem from="1598549330212" duration="14821000" />
+      <workItem from="1598641257743" duration="286000" />
+      <workItem from="1598649252633" duration="2270000" />
     </task>
     <servers />
   </component>
@@ -236,11 +236,11 @@
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1050/-1920.63.1920.1057@0.23.1792.1050" timestamp="1598423902190" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1051/-1920.63.1920.1057@0.23.1792.1051" timestamp="1598423240897" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1052/-1920.63.1920.1057@0.23.1792.1052" timestamp="1598455008395" />
-    <state x="397" y="185" key="SettingsEditor" timestamp="1598598294452">
-      <screen x="0" y="23" width="1792" height="1046" />
+    <state x="397" y="185" key="SettingsEditor" timestamp="1598641240333">
+      <screen x="0" y="23" width="1792" height="1047" />
     </state>
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1046/-1920.63.1920.1057@0.23.1792.1046" timestamp="1598598294452" />
-    <state x="397" y="185" key="SettingsEditor/0.23.1792.1047/-1920.63.1920.1057@0.23.1792.1047" timestamp="1598028729664" />
+    <state x="397" y="185" key="SettingsEditor/0.23.1792.1047/-1920.63.1920.1057@0.23.1792.1047" timestamp="1598641240333" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1047@0.23.1792.1047" timestamp="1598046440018" />
     <state x="397" y="186" key="SettingsEditor/0.23.1792.1051/-1920.63.1920.1057@0.23.1792.1051" timestamp="1598437122236" />
     <state x="397" y="186" key="SettingsEditor/0.23.1792.1052/-1920.63.1920.1057@0.23.1792.1052" timestamp="1598342878625" />

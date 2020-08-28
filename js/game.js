@@ -8,7 +8,7 @@ class Game{
         this.map = new Map(10, 10, 0, 0, 10); // création d'un nouvel objet avec la classe Map.
         this.armes;
         this.joueurs;
-        this.indexJoueurActuel = 0;
+        this._indexJoueurActuel = 0;
 
         // Récupérer les boutons depuis leur ID
         this.boutons = [{
@@ -49,12 +49,18 @@ class Game{
         // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.
         this.boutons.forEach(pair => {
             pair.attaquer.on('click', () => this.attaquer(this.joueurActuel, this.autreJoueur));
-            pair.defendre.on('click', () => this.defendre(this.joueurActuel, this.autreJoueur));
+            pair.defendre.on('click', () => this.defendre(this.joueurActuel));
         });
     }
-
-    get joueurActuel() { 
+    
+    get joueurActuel() {
         return this.joueurs[this.indexJoueurActuel];
+    }
+    get indexJoueurActuel() {
+        return Number(this._indexJoueurActuel);
+    }
+    set indexJoueurActuel(idx) {
+        this._indexJoueurActuel = idx;
     }
     get indexAutreJoueur() {
         return this.indexJoueurActuel === 0 ? 1 : 0;
@@ -151,16 +157,8 @@ class Game{
         );
 
         // Si un joueur est trouvé dans les cases adjacentes
-        if (joueurPotentiel !== false) {
+        if (joueurPotentiel !== false)
             this.etat = ETAT_COMBAT;
-
-            // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs
-            this.boutons.forEach(pair => {
-                pair.attaquer[0].disabled = false;
-                pair.defendre[0].disabled = false;
-            });
-            //this.combattre();
-        }
 
         this.finirLeTour();
     }
@@ -178,21 +176,21 @@ class Game{
         $('#armeJoueur1').text(this.joueurs[1].arme.nom);
     }
 
-    combattre() {
-        this.attaquer(this.joueurActuel, this.autreJoueur);
-    }
-
     /**
-     * Permet au joueurA d'attaquer joueurB
-     * @param { Player } joueurA Joueur qui attaque
-     * @param { Player } joueurB Joueur qui EST attaqué
+     * Permet au joueur attaquant d'attaquer le joueur victime
+     * @param { Player } attaquant Joueur qui attaque
+     * @param { Player } victime Joueur qui EST attaqué
      */
-    attaquer(joueurA, joueurB) {
-        joueurB.sante -= joueurA.arme.degats;
+    attaquer(attaquant, victime) {
+        if (victime.bouclier === true)
+            victime.sante -= attaquant.arme.degats / 2;
+        else
+            victime.sante -= attaquant.arme.degats;
+        victime.bouclier = false;
 
         // On actualise la santé dans les infos joueurs sur les côtés.
-        $("#santeJoueur" + this.indexJoueurActuel).text(joueurB.sante);
-        if (joueurB.sante > 0) {
+        $("#santeJoueur" + this.indexJoueurActuel).text(victime.sante);
+        if (victime.sante > 0) {
             // Vivant
             this.finirLeTour();
         } else {
@@ -206,7 +204,12 @@ class Game{
      * @param { Player } joueur
      */
     defendre(joueur) {
+        joueur.bouclier = true;
+        this.finirLeTour();
+    }
 
+    changerJoueur() {
+        this.indexJoueurActuel = !this.indexJoueurActuel;
     }
 
     /**
@@ -220,17 +223,17 @@ class Game{
                 console.log("DEFAULT CASE !");
                 break;
             case ETAT_DEPLACEMENT:
-                this.indexJoueurActuel++;
-                if (this.indexJoueurActuel > this.joueurs.length - 1)
-                    this.indexJoueurActuel = 0;
+                this.changerJoueur();
                 this.joueurs[this.indexJoueurActuel].casesPossiblesDeplacement();
                 break;
             case ETAT_COMBAT:
                 console.log("FIGHT CASE !");
-                this.indexJoueurActuel++;
-                if (this.indexJoueurActuel > this.joueurs.length - 1)
-                    this.indexJoueurActuel = 0;
-                //this.combattre();
+                // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs
+                this.changerJoueur();
+                this.boutons.forEach((pair, idx) => {
+                    pair.attaquer[0].disabled = idx === this.indexJoueurActuel;
+                    pair.defendre[0].disabled = idx === this.indexJoueurActuel;
+                });
                 break;
         }
     }

@@ -24,5 +24,7 @@ $(document).ready(function () {
 
     // Débute la partie
     partie.demarrer();
+
+    // Aide au debug
     window.game = partie;
 });

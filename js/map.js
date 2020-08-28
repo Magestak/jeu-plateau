@@ -65,7 +65,7 @@ class Map {
                     !caseGeneree.classList.contains('casesArmes')
                 )
             });
-            // On attribue la classe css "casesArmes" aux cases sélectionnées aléatoirement.
+            // On récupère les coordonnées de la case recevant l' arme, et on attribue la classe css "casesArmes" à cette même case.
             arme.coord = extraireCoordonneesId(caseArme);
             caseArme.classList.add('casesArmes');
             caseArme.innerHTML = arme.nom;

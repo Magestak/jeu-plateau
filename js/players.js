@@ -6,6 +6,7 @@ class Player {
         this.arme = arme;
         this._coordonnees = {};
         this.game;
+        this.bouclier = false;
     }
     set coord(value) {
         this._coordonnees = {

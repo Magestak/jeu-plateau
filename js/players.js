@@ -1,7 +1,7 @@
 class Player {
-    constructor(nom, sante, arme,) {
+    constructor(nom, visuel, sante, arme,) {
         this.nom = nom;
-        //this.visuel = visuel; // TODO: A RAJOUTER
+        this.visuel = visuel;
         this.sante = sante;
         this.arme = arme;
         this._coordonnees = {};

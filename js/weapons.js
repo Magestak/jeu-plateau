@@ -1,7 +1,7 @@
 class Weapon {
-    constructor(nom, degats) {
+    constructor(nom,visuel, degats) {
         this.nom = nom;
-        // this.visuel = visuel;// TODO: A RAJOUTER
+        this.visuel = visuel
         this.degats = degats;
         this._proprietaire;
         this._coordonnees = {};

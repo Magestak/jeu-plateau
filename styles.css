@@ -9,6 +9,9 @@
 #wrapper {
     margin: 0 auto;
 }
+img {
+    width: 100%;
+}
 /************** Map *******************/
 table {
     border-collapse: collapse;
@@ -18,7 +21,7 @@ tr, td {
     height: 70px;
     width: 70px;
     border: 2px solid black;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
 }
 .casesObstacles {
@@ -35,4 +38,8 @@ tr, td {
 }
 .casesSurbrillance {
     box-shadow: orange 0px 0px 10px 3px inset;
+}
+.imgTableau {
+    max-width: 65px;
+    max-height: 65px;
 }

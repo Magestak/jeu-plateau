@@ -68,7 +68,8 @@ class Map {
             // On récupère les coordonnées de la case recevant l' arme, et on attribue la classe css "casesArmes" à cette même case.
             arme.coord = extraireCoordonneesId(caseArme);
             caseArme.classList.add('casesArmes');
-            caseArme.innerHTML = arme.nom;
+            //caseArme.innerHTML = arme.nom;
+            caseArme.innerHTML = arme.visuel;
         });
     }
 
@@ -102,8 +103,9 @@ class Map {
             let idJoueur = caseJoueur.id.split('-');
             // On attribue la classe css "casesJoueurs".
             caseJoueur.classList.add('casesJoueurs');
-            caseJoueur.innerHTML = joueur.nom;
-            // on attribue l'ID de la case joueur à la propriété `coordonnées`du player avec la méthode `map`.
+            // On insère le visuel du joueur dans la case.
+            caseJoueur.innerHTML = joueur.visuel;
+            // On attribue l'ID de la case joueur à la propriété `coordonnées`du player avec la méthode `map`.
             joueur.coord = idJoueur.map(Number);
         });
     }

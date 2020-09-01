@@ -116,9 +116,9 @@ class Game{
             const armePrecedente = this.armes.find(arme => arme.coord?.x === positionActuelle.x && arme.coord?.y === positionActuelle.y);
             // Affichage de l'arme au sol
             if (armePrecedente)
-                $caseActuelle.text(armePrecedente.nom);
+                $caseActuelle.html(armePrecedente.visuel);
         } else
-            $caseActuelle.text("");
+            $caseActuelle.html("");
 
         // On déplace le joueur sur la nouvelle case.
         joueur.coord = [nouvellePositionJoueur.x, nouvellePositionJoueur.y];
@@ -131,15 +131,18 @@ class Game{
                 const armeDropee = joueur.arme;
                 // On remplace dans le tableau `this.armes` l'arme que va récupérer le joueur, par l'arme dont il était équipé.
                 this.armes.splice(this.armes.indexOf(armeSuivante), 1, armeDropee);
+                console.log("THIS.ARMES: ", this.armes);
                 armeDropee.coord = nouvellePositionJoueur;
+                console.log("ARME DROPEE.COORD: ", armeDropee.coord);
                 armeSuivante.joueur = joueur;
+                console.log("ARME SUIVANTE.JOUEUR: ", armeSuivante.joueur);
             }
 
             // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
             $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
         }
-        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et le nom du joueur.
-        $nouvelleCaseJoueur.addClass('casesJoueurs').text(joueur.nom);
+        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et on insère le visuel du joueur.
+        $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.visuel);
 
         // Vérifier si un autre joueur (joueurB) est collé à `joueur`
         const joueurPotentiel = newVerifierCasesAdjacentes(
@@ -189,7 +192,7 @@ class Game{
         victime.bouclier = false;
 
         // On actualise la santé dans les infos joueurs sur les côtés.
-        $("#santeJoueur" + this.indexJoueurActuel).text(victime.sante);
+        $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
         if (victime.sante > 0) {
             // Vivant
             this.finirLeTour();
@@ -231,8 +234,8 @@ class Game{
                 // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs
                 this.changerJoueur();
                 this.boutons.forEach((pair, idx) => {
-                    pair.attaquer[0].disabled = idx === this.indexJoueurActuel;
-                    pair.defendre[0].disabled = idx === this.indexJoueurActuel;
+                    pair.attaquer[0].disabled = idx === this.indexAutreJoueur;
+                    pair.defendre[0].disabled = idx === this.indexAutreJoueur;
                 });
                 break;
         }

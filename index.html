@@ -8,30 +8,64 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="wrapper" class="w3-auto w3-row">
-        <div id="joueurA" class="w3-container w3-center w3-col m2">
-            <h2>Le Lutin</h2>
-            <div>
-                <img src="img/lutin.jpg" alt="Lutin">
+    <div id="wrapper" class="w3-auto">
+        <div class="w3-row">
+            <div id="joueurA" class="w3-container w3-center w3-col m2">
+                <h2>Le Lutin</h2>
+                <div>
+                    <img src="img/lutin.jpg" alt="Lutin">
+                </div>
+                <p>Points de vie: <span id="santeJoueur0"></span></p>
+                <p><span id="visuelArmeJoueur0"></span></p>
+                <p>Arme: <span id="armeJoueur0"></span></p>
+                <div id="boutonsCombatJoueur0">
+                    <button id="btnAttaqueJoueur0" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
+                    <button id="btnDefenseJoueur0" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
+                </div>
             </div>
-            <p>Points de vie: <span id="santeJoueur0"></span></p>
-            <p>Arme: <span id="armeJoueur0"></span></p>
-            <div id="boutonsCombatJoueur0">
-                <button id="btnAttaqueJoueur0" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
-                <button id="btnDefenseJoueur0" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
+            <table id="gameMap" class="w3-col m8"></table>
+            <div id="joueurB" class="w3-container w3-center w3-col m2">
+                <h2>La Lutine</h2>
+                <div>
+                    <img src="img/lutine.jpg" alt="Lutine">
+                </div>
+                <p>Points de vie: <span id="santeJoueur1"></span></p>
+                <p><span id="visuelArmeJoueur1"></span></p>
+                <p>Arme: <span id="armeJoueur1"></span></p>
+                <div id="boutonsCombatJoueur1">
+                    <button id="btnAttaqueJoueur1" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
+                    <button id="btnDefenseJoueur1" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
+                </div>
             </div>
         </div>
-        <table id="gameMap" class="w3-col m8"></table>
-        <div id="joueurB" class="w3-container w3-center w3-col m2">
-            <h2>La Lutine</h2>
-            <div>
-                <img src="img/lutine.jpg" alt="Lutine">
-            </div>
-            <p>Points de vie: <span id="santeJoueur1"></span></p>
-            <p>Arme: <span id="armeJoueur1"></span></p>
-            <div id="boutonsCombatJoueur1">
-                <button id="btnAttaqueJoueur1" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
-                <button id="btnDefenseJoueur1" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
+        <div class="w3-content w3-center w3-margin-top">
+           <h2 class="w3-padding-24">Les différentes armes</h2>
+            <div class="w3-row">
+                <div class="tableauArmes w3-container w3-col">
+                    <img src="img/couteau.png" alt="couteau" class="imageArme">
+                    <h3>Couteau</h3>
+                    <p>10 points de dégâts</p>
+                </div>
+                <div class="tableauArmes w3-container w3-col">
+                    <img src="img/epee.png" alt="epee" class="imageArme">
+                    <h3>Epée</h3>
+                    <p>20 points de dégâts</p>
+                </div>
+                <div class="tableauArmes w3-container w3-col">
+                    <img src="img/hache.png" alt="hache" class="imageArme">
+                    <h3>Hache</h3>
+                    <p>20 points de dégâts</p>
+                </div>
+                <div class="tableauArmes w3-container w3-col">
+                    <img src="img/arc.png" alt="arc" class="imageArme">
+                    <h3>Arc</h3>
+                    <p>30 points de dégâts</p>
+                </div>
+                <div class="tableauArmes w3-container w3-col">
+                    <img src="img/arbalete.png" alt="arbalete" class="imageArme">
+                    <h3>Arbalète</h3>
+                    <p>30 points de dégâts</p>
+                </div>
             </div>
         </div>
     </div>

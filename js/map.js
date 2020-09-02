@@ -68,7 +68,7 @@ class Map {
             // On récupère les coordonnées de la case recevant l' arme, et on attribue la classe css "casesArmes" à cette même case.
             arme.coord = extraireCoordonneesId(caseArme);
             caseArme.classList.add('casesArmes');
-            //caseArme.innerHTML = arme.nom;
+            // On insère le visuel de l'arme dans la case.
             caseArme.innerHTML = arme.visuel;
         });
     }

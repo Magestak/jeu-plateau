@@ -140,6 +140,7 @@ class Game{
 
             // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
             $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
+            $("#visuelArmeJoueur" + this.indexJoueurActuel).html(joueur.arme.visuel);
         }
         // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et on insère le visuel du joueur.
         $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.visuel);
@@ -174,8 +175,10 @@ class Game{
     afficherInfosJoueurs(joueurs) {
         //TODO: Voir si possible de déplacer cette méthode dans la class Player.
         $('#santeJoueur0').text(this.joueurs[0].sante);
+        $('#visuelArmeJoueur0').html(this.joueurs[0].arme.visuel);
         $('#armeJoueur0').text(this.joueurs[0].arme.nom);
         $('#santeJoueur1').text(this.joueurs[1].sante);
+        $('#visuelArmeJoueur1').html(this.joueurs[0].arme.visuel);
         $('#armeJoueur1').text(this.joueurs[1].arme.nom);
     }
 

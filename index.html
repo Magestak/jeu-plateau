@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <title>Jeu de plateau</title>
+    <title>Lutin contre Lutine</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div id="wrapper" class="w3-auto">
+        <h1 class="w3-center">Le Lutin contre la Lutine</h1>
         <div class="w3-row">
             <div id="joueurA" class="w3-container w3-center w3-col m2">
                 <h2>Le Lutin</h2>
                 <div>
-                    <img src="img/lutin.jpg" alt="Lutin">
+                    <img src="img/lutin.png" alt="Lutin">
                 </div>
-                <p>Points de vie: <span id="santeJoueur0"></span></p>
-                <p><span id="visuelArmeJoueur0"></span></p>
-                <p>Arme: <span id="armeJoueur0"></span></p>
+                <p class="w3-container w3-padding w3-large">Points de vie: <span id="santeJoueur0" class="w3-text-red w3-xlarge"></span></p>
+                <p class="w3-container w3-padding-16"><span id="visuelArmeJoueur0"></span></p>
+                <p class="w3-container w3-large">Arme: <br><span id="armeJoueur0" class="w3-text-red w3-xlarge"></span></p>
                 <div id="boutonsCombatJoueur0">
                     <button id="btnAttaqueJoueur0" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
                     <button id="btnDefenseJoueur0" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
@@ -27,19 +28,19 @@
             <div id="joueurB" class="w3-container w3-center w3-col m2">
                 <h2>La Lutine</h2>
                 <div>
-                    <img src="img/lutine.jpg" alt="Lutine">
+                    <img src="img/lutine.png" alt="Lutine">
                 </div>
-                <p>Points de vie: <span id="santeJoueur1"></span></p>
-                <p><span id="visuelArmeJoueur1"></span></p>
-                <p>Arme: <span id="armeJoueur1"></span></p>
+                <p class="w3-container w3-padding w3-large">Points de vie: <span id="santeJoueur1" class="w3-text-red w3-xlarge"></span></p>
+                <p class="w3-container w3-padding-16"><span id="visuelArmeJoueur1"></span></p>
+                <p class="w3-container w3-large">Arme: <br><span id="armeJoueur1" class="w3-text-red w3-xlarge"></span></p>
                 <div id="boutonsCombatJoueur1">
                     <button id="btnAttaqueJoueur1" class="w3-button w3-black w3-margin" disabled>Attaquer</button>
                     <button id="btnDefenseJoueur1" class="w3-button w3-black w3-margin" disabled>Se défendre</button>
                 </div>
             </div>
         </div>
-        <div class="w3-content w3-center w3-margin-top">
-           <h2 class="w3-padding-24">Les différentes armes</h2>
+        <div class="recapArmes w3-content w3-center">
+           <h2 class="w3-padding">Les différentes armes</h2>
             <div class="w3-row">
                 <div class="tableauArmes w3-container w3-col">
                     <img src="img/couteau.png" alt="couteau" class="imageArme">
@@ -69,6 +70,15 @@
             </div>
         </div>
     </div>
+    <footer id="main-footer" class="w3-container w3-black w3-padding-16">
+        <div class="w3-stretch w3-center">
+            <p class="w3-small">Copyright 2020 - <a href="mentions-legales.html">Mentions légales</a> - Site réalisé par
+                <a href="http://www.nicolas-coureau.fr/">Nicolas Coureau</a></p>
+            <p class="w3-small w3-hide-small">Projet 6 - Parcours Développeur d'application - Frontend - <a
+                    href="https://openclassrooms.com/fr/paths/60-developpeur-dapplication-frontend">OPENCLASSROOMS</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>

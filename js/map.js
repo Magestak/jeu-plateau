@@ -65,8 +65,11 @@ class Map {
                     !caseGeneree.classList.contains('casesArmes')
                 )
             });
-            // On récupère les coordonnées de la case recevant l' arme, et on attribue la classe css "casesArmes" à cette même case.
+            // On récupère les coordonnées de la case recevant l' arme.
             arme.coord = extraireCoordonneesId(caseArme);
+            // On retire la classe css "casesAccessibles".
+            caseArme.classList.remove('casesAccessibles');
+            // On attribue la classe css "casesArmes" à cette même case.
             caseArme.classList.add('casesArmes');
             // On insère le visuel de l'arme dans la case.
             caseArme.innerHTML = arme.visuel;
@@ -101,6 +104,8 @@ class Map {
             });
             // On récupère l'ID de la case joueur en lui appliquant la méthode `.split`.
             let idJoueur = caseJoueur.id.split('-');
+            // On retire la classe css "casesAccessibles".
+            caseJoueur.classList.remove('casesAccessibles');
             // On attribue la classe css "casesJoueurs".
             caseJoueur.classList.add('casesJoueurs');
             // On insère le visuel du joueur dans la case.

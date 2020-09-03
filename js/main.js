@@ -13,8 +13,8 @@ $(document).ready(function () {
     const tableauArmes = [epee, hache, arc, arbalete];
 
     // Création des joueurs avec la class Player
-    const joueurA = new Player("Joueur A",'<img src="../img/lutin.jpg" alt="lutin" class="imgTableau">', 100, couteau);
-    const joueurB = new Player("Joueur B", '<img src="../img/lutine.jpg" alt="lutine" class="imgTableau">',100, couteau);
+    const joueurA = new Player("Joueur A",'<img src="../img/lutin.png" alt="lutin" class="imgTableau">', 100, couteau);
+    const joueurB = new Player("Joueur B", '<img src="../img/lutine.png" alt="lutine" class="imgTableau">',100, couteau);
 
     // On crée un tableau avec les joueurs qui seront positionnés sur la map
     const tableauJoueurs = [joueurA, joueurB];

@@ -5,7 +5,9 @@
     box-sizing: border-box;
 }
 /*************** wrapper et génériques *****************/
-
+body {
+    background-color: #f5f5dc;
+}
 #wrapper {
     margin: 0 auto;
 }
@@ -24,29 +26,40 @@ tr, td {
     padding: 5px;
     text-align: center;
 }
+/* couleur de fond des cases obstacles */
 .casesObstacles {
     background-color: black;
 }
+/* couleur de fond des cases armes */
 .casesArmes {
-    
+    background-color: #eeeec3;
 }
+/* couleur de fond des cases joueurs */
 .casesJoueurs {
-    
+    background-color: #eeeec3;
 }
+/* couleur de fond des cases accessibles */
 .casesAccessibles {
-    
+    background-color: #e9e9af;
 }
+/* couleur des cases pour le déplacement */
 .casesSurbrillance {
-    box-shadow: orange 0px 0px 10px 3px inset;
+    box-shadow: #505016 0px 0px 10px 3px inset;
 }
+/* Dimensions des images dans la map */
 .imgTableau {
     max-width: 65px;
     max-height: 65px;
 }
+/****************** Légende des armes *********************/
 .imageArme {
     width: 75px;
     height: 75px;
 }
 .tableauArmes {
     width: 20%;
+}
+.recapArmes {
+    margin-top: 20px;
+    margin-bottom: 50px;
 }

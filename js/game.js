@@ -117,8 +117,12 @@ class Game{
             // Affichage de l'arme au sol
             if (armePrecedente)
                 $caseActuelle.html(armePrecedente.visuel);
-        } else
+        } else {
+            // On efface le contenu de la case.
             $caseActuelle.html("");
+            // Et on réattribue la classe css "casesAccessibles" à la case.
+            $caseActuelle.addClass("casesAccessibles");
+        }
 
         // On déplace le joueur sur la nouvelle case.
         joueur.coord = [nouvellePositionJoueur.x, nouvellePositionJoueur.y];
@@ -142,6 +146,8 @@ class Game{
             $("#armeJoueur" + this.indexJoueurActuel).text(joueur.arme);
             $("#visuelArmeJoueur" + this.indexJoueurActuel).html(joueur.arme.visuel);
         }
+        // Pour la nouvelle case joueur, on efface la classe css "casesAccessibles".
+        $nouvelleCaseJoueur.removeClass('casesAccessibles');
         // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et on insère le visuel du joueur.
         $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.visuel);
 
@@ -194,13 +200,16 @@ class Game{
             victime.sante -= attaquant.arme.degats;
         victime.bouclier = false;
 
-        // On actualise la santé dans les infos joueurs sur les côtés.
-        $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
         if (victime.sante > 0) {
-            // Vivant
+            // On actualise la santé dans les infos joueurs sur les côtés.
+            $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
             this.finirLeTour();
         } else {
-            // Mort
+            // On met à jour la santé dans les infos des joueurs.
+            if (victime.sante < 0) {
+                victime.sante = 0;
+                $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
+            }
             this.finirLaPartie();
         }
     }

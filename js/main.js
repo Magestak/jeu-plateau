@@ -23,7 +23,10 @@ $(document).ready(function () {
     partie.initialiser(tableauArmes, tableauJoueurs);
 
     // Débute la partie
-    partie.demarrer();
+    $('#demarrer').on('click', function () {
+        $('#ecranDepart').fadeOut('slow'); // L'écran de démarrage disparait.
+        partie.demarrer(); // La partie démarre.
+    });
 
     // Aide au debug
     window.game = partie;

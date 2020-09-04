@@ -167,8 +167,15 @@ class Game{
         );
 
         // Si un joueur est trouvé dans les cases adjacentes
-        if (joueurPotentiel !== false)
-            this.etat = ETAT_COMBAT;
+        if (joueurPotentiel !== false) {
+            this.etat = ETAT_COMBAT; // On passe en état combat.
+            // On affiche le message de début de combat.
+            $('#debutCombat').css('display', 'block');
+            // En activant le bouton, le message disparait et le combat commence.
+            $('#combat').on('click', function () {
+                $('#debutCombat').fadeOut('slow');
+            });
+        }
 
         this.finirLeTour();
     }
@@ -254,7 +261,7 @@ class Game{
     }
 
     /**
-     * Arrête la partie et affiche les scores
+     * Arrête la partie et propose de recommencer une partie
      */
     finirLaPartie() {
 

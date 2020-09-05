@@ -40,12 +40,22 @@ class Map {
     genererCasesObstacles() {
         //TODO: Pour éviter le joueur coincé dans 1 coin, voir pour limiter le nombre de cases les unes à la suite des autres,
         //      ou bien voir pour recharger la page (reload) en dernier recours.
+        console.log("Génération des cases noirs");
         for (let i = 0; i < this.casesObstacles; i++) {
+            console.log(`Génération de la case noir ${i+1}/${this.casesObstacles}`);
             // On récupère une case aléatoire gràce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`.
             // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`.
             const caseNoire = recupererCaseAleatoire.call(this, function verifieLaCase(caseGeneree) { 
                 // Il ne faut pas que la `caseGeneree` soit déjà une `casesObstacles`.
-                return !caseGeneree.classList.contains('casesObstacles');
+                console.log("Vérification de la case aléatoire :", caseGeneree);
+                if (caseGeneree.classList.contains('casesObstacles')) return false;
+                return !newVerifierCasesAdjacentes(
+                    caseGeneree,
+                    (cellule, prev) => {
+                        if (prev === true) return true;
+                        return cellule.classList.contains('casesObstacles');
+                    }
+                );
             });
             // On retire la classe css "casesAccessibles" à la case tirée aléatoirement.
             caseNoire.classList.remove('casesAccessibles');
@@ -62,7 +72,14 @@ class Map {
                 return (
                     // Il ne faut pas que la `caseGeneree` soit déjà une `casesObstacles` ou une `casesArmes`.
                     !caseGeneree.classList.contains('casesObstacles') &&
-                    !caseGeneree.classList.contains('casesArmes')
+                    !caseGeneree.classList.contains('casesArmes') && 
+                    !newVerifierCasesAdjacentes(
+                        caseGeneree,
+                        (cellule, prev) => {
+                            if (prev === false) return false;
+                            return cellule.classList.contains('casesObstacles');
+                        }
+                    )
                 )
             });
             // On récupère les coordonnées de la case recevant l' arme.
@@ -88,7 +105,21 @@ class Map {
                     !caseGeneree.classList.contains('casesArmes') &&
                     !caseGeneree.classList.contains('casesJoueurs') &&
                     // ni que cette case soit adjacente à une autre case joueur.
-                    verifierCasesAdjacentes(caseGeneree, coords => {
+                    !newVerifierCasesAdjacentes(
+                        caseGeneree,
+                        (cellule, prev) => {
+                            if (prev === true) return true;
+                            return cellule.classList.contains('casesJoueurs');
+                        }
+                    ) && 
+                    !newVerifierCasesAdjacentes(
+                        caseGeneree,
+                        (cellule, prev) => {
+                            if (prev === false) return false;
+                            return cellule.classList.contains('casesObstacles');
+                        }
+                    )
+                    /* verifierCasesAdjacentes(caseGeneree, coords => {
                         return [
                             $(`#${coords.x - 1}-${coords.y}`),
                             $(`#${coords.x + 1}-${coords.y}`),
@@ -99,7 +130,7 @@ class Map {
                             if (curr.length === 0) return true;
                             return !curr.hasClass('casesJoueurs')
                         }, true);
-                    })
+                    }) */
                 )
             });
             // On récupère l'ID de la case joueur en lui appliquant la méthode `.split`.

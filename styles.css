@@ -79,6 +79,7 @@ tr, td {
 }
 /* Dimensions des images dans la map */
 .imgTableau {
+    pointer-events: none;
     max-width: 65px;
     max-height: 65px;
 }

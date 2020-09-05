@@ -201,6 +201,20 @@ class Game{
      * @param { Player } victime Joueur qui EST attaqué
      */
     attaquer(attaquant, victime) {
+        /* if (victime.bouclier)
+            victime.sante = Math.max(victime.sante - attaquant.arme.degats / 2, 0);
+        else
+            victime.sante = Math.max(victime.sante - attaquant.arme.degats, 0);
+        victime.bouclier = false;
+
+        $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
+
+        if (victime.sante > 0)
+            this.finirLeTour();
+        else
+            this.finirLaPartie(); */
+        
+            
         if (victime.bouclier === true)
             victime.sante -= attaquant.arme.degats / 2;
         else
@@ -268,7 +282,7 @@ class Game{
         $('#finCombat').css('display', 'block');
 
         // Affichage du nom de vainqueur + message de félicitations.
-        $('#messageResultat').html('Félicitations ' + this.joueurActuel + '! Tu remportes le combat !')
+        $('#messageResultat').html('Félicitations ' + this.joueurActuel + ' ! Tu remportes le combat !')
 
         // Rechargement de la page avec le bouton "recommencer".
         $('#recommencer').on('click', function () {

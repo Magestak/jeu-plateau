@@ -17,13 +17,13 @@ class Weapon {
         this._proprietaire = undefined;
     }
 
-    get estPortee() {
+    /* get estPortee() {
         return !!this._proprietaire;
     }
 
     get joueur() { 
         return this._proprietaire;
-    }
+    } */
     set joueur(joueur) {
         this._proprietaire = joueur;
         this._coordonnees = {};

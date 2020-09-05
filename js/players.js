@@ -1,9 +1,9 @@
 class Player {
-    constructor(nom, visuel, sante, arme,) {
+    constructor(nom, visuel, sante) {
         this.nom = nom;
         this.visuel = visuel;
         this.sante = sante;
-        this.arme = arme;
+        this.arme = new Weapon("Couteau",'<img src="../img/couteau.png" alt="couteau", class="imgTableau">', 10); // Arme initiale des 2 joueurs;
         this._coordonnees = {};
         this.game;
         this.bouclier = false;

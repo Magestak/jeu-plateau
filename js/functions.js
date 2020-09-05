@@ -10,7 +10,7 @@ function recupererCaseAleatoire(verificateur) {
     do {
         // Récupération d'une case aléatoire
         caseGeneree = this.genererCasesAleatoires();
-    } while (!verificateur(caseGeneree)); // On recommence tant que le verificateur renvoit `true`
+    } while (!verificateur(caseGeneree)); // On recommence tant que le verificateur renvoit `false`
 
     // On renvoi la case générée, répondant aux critères du vérificateur
     return caseGeneree;
@@ -45,7 +45,7 @@ function extraireCoordonneesId(cellule) {
 /**
  * Renvoi `TRUE` si la `caseAVerifier` répond aux critères du `verificateur` (verificateur renvoi `TRUE`), sinon, renvoi false
  * @param { HTMLElement } caseAVerifier
- * @param { (coords: { x: number, y: number }, cellule?: HTMLElement) => boolean } verificateur
+ * @param { (cellule: HTMLElement, prev?: false | HTMLElement) => false | HTMLElement } verificateur
  * @returns { boolean }
  */
 function newVerifierCasesAdjacentes(caseAVerifier, verificateur) {
@@ -56,5 +56,17 @@ function newVerifierCasesAdjacentes(caseAVerifier, verificateur) {
         $(`#${coords.x + 1}-${coords.y}`),
         $(`#${coords.x}-${coords.y - 1}`),
         $(`#${coords.x}-${coords.y + 1}`)
-    ].reduce((prev, curr) => verificateur(curr[0], prev), false);
+    ]
+        .filter($cellule => $cellule.length > 0)
+        .reduce((prev, curr) => verificateur(curr[0], prev), false);
 }
+
+/* function isSurroundedBy(caseAVerifier, verificateur) { 
+    return newVerifierCasesAdjacentes(
+        caseAVerifier,
+        (cellule, prev) => {
+            if (prev === false) return false;
+            return verificateur(cellule, prev);
+        }
+    ) === true;
+} */

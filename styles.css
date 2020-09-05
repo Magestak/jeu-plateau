@@ -82,28 +82,6 @@ tr, td {
     max-width: 65px;
     max-height: 65px;
 }
-/****************** Message de début de combat **************/
-#debutCombat {
-    display: none;
-    z-index: 1;
-    position: absolute;
-    top: 200px;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-#combat {
-    margin-top: 30px;
-    width: 50%;
-    color: #ffc107;
-    background-color: #ffc107;
-    cursor: pointer;
-}
-#combat:hover {
-    background-color: #e9e9af;
-    color: #e9e9af;
-}
 
 /****************** Légende des armes *********************/
 .imageArme {
@@ -116,4 +94,26 @@ tr, td {
 .recapArmes {
     margin-top: 20px;
     margin-bottom: 50px;
+}
+/****************** Message de début + fin de combat **************/
+#debutCombat, #finCombat {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+#combat, #recommencer, #quitter {
+    margin-top: 30px;
+    width: 50%;
+    color: #ffc107;
+    background-color: #ffc107;
+    cursor: pointer;
+}
+#combat:hover, #recommencer:hover, #quitter:hover {
+    background-color: #e9e9af;
+    color: #e9e9af;
 }

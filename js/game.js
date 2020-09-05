@@ -213,7 +213,7 @@ class Game{
             this.finirLeTour();
         } else {
             // On met à jour la santé dans les infos des joueurs.
-            if (victime.sante < 0) {
+            if (victime.sante <= 0) {
                 victime.sante = 0;
                 $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
             }
@@ -261,10 +261,34 @@ class Game{
     }
 
     /**
-     * Arrête la partie et propose de recommencer une partie
+     * Arrête la partie et propose de recommencer une partie ou de quitter le jeu
      */
     finirLaPartie() {
+        // Affichage du bloc de fin de partie
+        $('#finCombat').css('display', 'block');
 
+        // Affichage du nom de vainqueur + message de félicitations.
+        $('#messageResultat').html('Félicitations ' + this.joueurActuel + '! Tu remportes le combat !')
+
+        // Rechargement de la page avec le bouton "recommencer".
+        $('#recommencer').on('click', function () {
+            document.location.reload(true);
+        });
+
+        // Effacement du contenu de la page et affichage d'un message d'au revoir avec le bouton "quitter"
+        $('#quitter').on('click', function () {
+            $('body').html("");
+            // Création du message de fin.
+            let $elemPFin = $('body').append("<p>Merci de votre visite et à bientôt !</p>");
+
+            // Mise en place du CSS pour le message de fin.
+            $elemPFin.css({
+                "fontSize" : "36px",
+                "textAlign" : "center",
+                "paddingTop" : "100px",
+                "paddingBottom" : "100px"
+            });
+        });
     }
 }
 

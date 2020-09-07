@@ -10,7 +10,7 @@ class Game{
         this.joueurs;
         this._indexJoueurActuel = 0;
 
-        // Récupérer les boutons depuis leur ID
+        // Récupérer les boutons depuis leur ID.
         this.boutons = [{
             attaquer: $('#btnAttaqueJoueur0'),
             defendre: $('#btnDefenseJoueur0')
@@ -34,16 +34,16 @@ class Game{
         this.map.genererMapVide(); // Génère une map vide.
         this.map.genererCasesObstacles(); // Rajoute des cases obstacles sur la map vide.
 
-        // Insertion des armes dans la map
+        // Insertion des armes dans la map.
         this.map.insererArmesMap(this.armes);
 
-        // Insertion des joueurs dans la map
+        // Insertion des joueurs dans la map.
         this.map.insererJoueursMap(this.joueurs);
 
         // Affichage des infos joueurs sur la page dans les parties réservées à chacun des joueurs.
         this.afficherInfosJoueurs(this.joueurs);
 
-        // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`
+        // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`.
         $('td').each((idx, cellule) => cellule.addEventListener('click', this.onCellClick.bind(this)));
 
         // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.

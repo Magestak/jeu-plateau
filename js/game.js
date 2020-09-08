@@ -43,8 +43,8 @@ class Game{
         // Affichage des infos joueurs sur la page dans les parties réservées à chacun des joueurs.
         this.afficherInfosJoueurs(this.joueurs);
 
-        // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `onCellClick`.
-        $('td').each((idx, cellule) => cellule.addEventListener('click', this.onCellClick.bind(this)));
+        // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `clickCellule`.
+        $('td').each((idx, cellule) => cellule.addEventListener('click', this.clickCellule.bind(this)));
 
         // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.
         this.boutons.forEach(pair => {
@@ -78,7 +78,7 @@ class Game{
     }
 
     // Méthode pour la gestion de l'évènement "click" sur les cases.
-    onCellClick(event) {
+    clickCellule(event) {
         const cellule = event.target;
         if (!cellule.classList.contains('casesSurbrillance')) return;
         if (this.etat !== ETAT_DEPLACEMENT) return;
@@ -110,11 +110,11 @@ class Game{
         // On efface la classe css de l'ancienne case joueur.
         $caseActuelle.removeClass('casesJoueurs');
 
-        // Quand on part d'une case ou il y avait une arme (affichage de l'ancienne arme du joueur)
+        // Quand on part d'une case ou il y avait une arme (affichage de l'ancienne arme du joueur).
         if ($caseActuelle.hasClass('casesArmes')) {
-            // Récupération de l'arme au sol
+            // Récupération de l'arme au sol.
             const armePrecedente = this.armes.find(arme => arme.coord?.x === positionActuelle.x && arme.coord?.y === positionActuelle.y);
-            // Affichage de l'arme au sol
+            // Affichage de l'arme au sol.
             if (armePrecedente)
                 $caseActuelle.html(armePrecedente.visuel);
         } else {
@@ -129,17 +129,14 @@ class Game{
 
         // Si la nouvelle case joueur est aussi une case contenant une arme.
         if ($nouvelleCaseJoueur.hasClass('casesArmes')) {
-            // Quand on arrive sur une case arme (échange des armes - non-visuel sur le plateau mais changement sur les côtés)
+            // Quand on arrive sur une case arme (échange des armes - non-visuel sur le plateau mais changement sur les côtés).
             const armeSuivante = this.armes.find(arme => arme.coord?.x === nouvellePositionJoueur.x && arme.coord?.y === nouvellePositionJoueur.y);
             if (armeSuivante) {
                 const armeDropee = joueur.arme;
                 // On remplace dans le tableau `this.armes` l'arme que va récupérer le joueur, par l'arme dont il était équipé.
                 this.armes.splice(this.armes.indexOf(armeSuivante), 1, armeDropee);
-                console.log("THIS.ARMES: ", this.armes);
                 armeDropee.coord = nouvellePositionJoueur;
-                console.log("ARME DROPEE.COORD: ", armeDropee.coord);
                 armeSuivante.joueur = joueur;
-                console.log("ARME SUIVANTE.JOUEUR: ", armeSuivante.joueur);
             }
 
             // On actualise la nouvelle arme dans les infos joueurs sur les côtés.
@@ -148,14 +145,14 @@ class Game{
         }
         // Pour la nouvelle case joueur, on efface la classe css "casesAccessibles".
         $nouvelleCaseJoueur.removeClass('casesAccessibles');
-        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueur", et on insère le visuel du joueur.
+        // Pour la nouvelle case joueur, on attribue la classe css "casesJoueurs", et on insère le visuel du joueur.
         $nouvelleCaseJoueur.addClass('casesJoueurs').html(joueur.visuel);
 
-        // Vérifier si un autre joueur (joueurB) est collé à `joueur`
-        const joueurPotentiel = newVerifierCasesAdjacentes(
+        // Vérifier si un autre joueur (joueurB) est collé à `joueur`.
+        const joueurPotentiel = verifierCasesAdjacentes(
             $nouvelleCaseJoueur[0],
             (cellule, prev) => {
-                // Si la valeur précédente n'est pas un boolean (donc est une cellule)
+                // Si la valeur précédente n'est pas un boolean (donc est une cellule).
                 if (typeof prev !== "boolean") return prev;
                 if (!cellule) return false;
 
@@ -201,38 +198,19 @@ class Game{
      * @param { Player } victime Joueur qui EST attaqué
      */
     attaquer(attaquant, victime) {
-        /* if (victime.bouclier)
+        if (victime.bouclier)
             victime.sante = Math.max(victime.sante - attaquant.arme.degats / 2, 0);
         else
             victime.sante = Math.max(victime.sante - attaquant.arme.degats, 0);
         victime.bouclier = false;
 
+        // On actualise la santé dans les infos joueurs sur les côtés.
         $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
 
         if (victime.sante > 0)
             this.finirLeTour();
         else
-            this.finirLaPartie(); */
-        
-            
-        if (victime.bouclier === true)
-            victime.sante -= attaquant.arme.degats / 2;
-        else
-            victime.sante -= attaquant.arme.degats;
-        victime.bouclier = false;
-
-        if (victime.sante > 0) {
-            // On actualise la santé dans les infos joueurs sur les côtés.
-            $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
-            this.finirLeTour();
-        } else {
-            // On met à jour la santé dans les infos des joueurs.
-            if (victime.sante <= 0) {
-                victime.sante = 0;
-                $("#santeJoueur" + this.indexAutreJoueur).text(victime.sante);
-            }
             this.finirLaPartie();
-        }
     }
 
     /**
@@ -264,7 +242,7 @@ class Game{
                 break;
             case ETAT_COMBAT:
                 console.log("FIGHT CASE !");
-                // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs
+                // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs.
                 this.changerJoueur();
                 this.boutons.forEach((pair, idx) => {
                     pair.attaquer[0].disabled = idx === this.indexAutreJoueur;
@@ -278,7 +256,7 @@ class Game{
      * Arrête la partie et propose de recommencer une partie ou de quitter le jeu
      */
     finirLaPartie() {
-        // Affichage du bloc de fin de partie
+        // Affichage du bloc de fin de partie.
         $('#finCombat').css('display', 'block');
 
         // Affichage du nom de vainqueur + message de félicitations.
@@ -289,7 +267,7 @@ class Game{
             document.location.reload(true);
         });
 
-        // Effacement du contenu de la page et affichage d'un message d'au revoir avec le bouton "quitter"
+        // Effacement du contenu de la page et affichage d'un message d'au revoir avec le bouton "quitter".
         $('#quitter').on('click', function () {
             $('body').html("");
             // Création du message de fin.
@@ -305,28 +283,3 @@ class Game{
         });
     }
 }
-
-/**
-Déroulement d'un tour
-Exemple: joueurA
-
-MOUVEMENT : 
-
-    joueurA doit sélectionner une case pour se déplacer
-    joueurA se déplace
-
-        Si joueurA atteint une case "weapon", il "remplace" son arme actuelle par l'arme de la case.
-        Si joueurA atteint une case adjacente à celle d'un autre joueur, la partie "combat" commence.
-
-COMBAT : 
-
-    joueurA choisis entre : 
-        Attaquer
-        Se défendre
-
-    Si joueurA décide d'attaquer, le second joueur reçoit des dégats
-    Si joueurA décide de se défendre, un bouclier de 50% est activé
-
-Si l'autre joueur arrive à 0 points de vie, joueurA gagne et la partie s'arrête
-Sinon fin du tour
-*/

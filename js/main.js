@@ -11,17 +11,17 @@ $(document).ready(function () {
     // On crée un tableau avec les armes qui seront positionnées sur la map.
     const tableauArmes = [epee, hache, arc, arbalete];
 
-    // Création des joueurs avec la class Player
+    // Création des joueurs avec la class Player.
     const joueurA = new Player("Le Lutin",'<img src="../img/lutin2-min.png" alt="lutin" class="imgTableau">', 100);
     const joueurB = new Player("La Lutine", '<img src="../img/lutine2-min.png" alt="lutine" class="imgTableau">',100);
 
-    // On crée un tableau avec les joueurs qui seront positionnés sur la map
+    // On crée un tableau avec les joueurs qui seront positionnés sur la map.
     const tableauJoueurs = [joueurA, joueurB];
 
-    // Initialisation de la partie
+    // Initialisation de la partie.
     partie.initialiser(tableauArmes, tableauJoueurs);
 
-    // Débute la partie
+    // Débute la partie.
     $('#demarrer').on('click', function () {
         $('#ecranDepart').fadeOut('slow'); // L'écran de démarrage disparait.
         partie.demarrer(); // La partie démarre.

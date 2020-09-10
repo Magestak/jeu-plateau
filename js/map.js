@@ -13,7 +13,6 @@ class Map {
             const trElt = document.createElement('tr');
             trElt.id = 'line-' + i;
             document.getElementById('gameMap').appendChild(trElt);
-            
             // Création des cellules.
             for (let j = 0; j < this.nbColonnes; j++) {
                 const tdElt = document.createElement('td');

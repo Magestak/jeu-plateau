@@ -156,7 +156,7 @@ class Game{
                 if (typeof prev !== "boolean") return prev;
                 if (!cellule) return false;
 
-                // Renvoi de la cellule actuellement testée, ou de false
+                // Renvoi de la cellule actuellement testée, ou de false.
                 return cellule.classList.contains("casesJoueurs")
                         ? cellule
                         : false;
@@ -183,7 +183,6 @@ class Game{
      */
     // Permet d'afficher sur les cotés de la map, les infos des joueurs.
     afficherInfosJoueurs(joueurs) {
-        //TODO: Voir si possible de déplacer cette méthode dans la class Player.
         $('#santeJoueur0').text(this.joueurs[0].sante);
         $('#visuelArmeJoueur0').html(this.joueurs[0].arme.visuel);
         $('#armeJoueur0').text(this.joueurs[0].arme.nom);

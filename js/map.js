@@ -38,44 +38,55 @@ class Map {
     // Méthode de génération des cases obstacles sur la map vide.
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
-            // On récupère une case aléatoire grâce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`.
+            // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
             // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`.
             const caseNoire = recupererCaseAleatoire.call(this, function verifieLaCase(caseGeneree) { 
-                // Il ne faut pas que la `caseGeneree` soit déjà une `casesObstacles`.
+                // Si la `caseGeneree` est déjà une "casesObstacles", on prend une autre `caseGeneree`.
                 if (caseGeneree.classList.contains('casesObstacles')) return false;
+
                 // On s'assure que 2 "casesObstacles" ne se trouvent pas côte à côte.
-                return !verifierCasesAdjacentes(
+                // Renvoi true si AUCUNE "casesObstacles" ne se trouve autour, sinon FALSE.
+                return verifierCasesAdjacentes(
                     caseGeneree,
                     (cellule, prev) => {
+                        // Si on a déjà trouvé une "casesObstacles", on saute à la fin.
                         if (prev === true) return true;
+
+                        // Renvoi TRUE si la case vérifiée est une "casesObstacles"
                         return cellule.classList.contains('casesObstacles');
                     }
-                );
+                ) !== true; // Si on n'a PAS trouvé de "casesObstacles" autour de la case générée, tout est bon (renvoi TRUE).
             });
             // On retire la classe css "casesAccessibles" à la case tirée aléatoirement.
             caseNoire.classList.remove('casesAccessibles');
-            // On attribue la classe css "casesObstacles" aux cases sélectionnées aléatoirement.
+            // On attribue la classe css "casesObstacles" à la case.
             caseNoire.classList.add('casesObstacles');
         }
     }
     // Méthode de positionnement des armes sur la map;
     insererArmesMap(tableauArmes) {
         tableauArmes.forEach(arme => {
-            // On récupère une case aléatoire grâce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`.
+            // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
             // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`.
             const caseArme = recupererCaseAleatoire.call(this, function verifieLaCase(caseGeneree) {
                 return (
-                    // Il ne faut pas que la `caseGeneree` soit déjà une `casesObstacles` ou une `casesArmes`.
+                    // Il ne faut pas que la `caseGeneree` soit déjà une "casesObstacles" ou une "casesArmes".
                     !caseGeneree.classList.contains('casesObstacles') &&
                     !caseGeneree.classList.contains('casesArmes') &&
                     // On s'assure que la "casesArmes" ne sera pas encerclée de "casesObstacles".
-                    !verifierCasesAdjacentes(
+                    verifierCasesAdjacentes(
                         caseGeneree,
-                        (cellule, prev) => {
+                        (cellule, prev) => { // Si une des 4 cases autour n'est PAS une "casesObstacles", on renvoi FALSE.
+
+                            // Si une des cases précédemment vérifiée n'est "PAS" une case obstacle
+                            // Alors on sait que la caseGeneree n'est PAS "encerclée" par les cases obstacles (vu qu'il y a, au moins, 1 case vide).
+                            // On n'a donc pas l'utilité de vérifier les cases suivantes et on renvoi false jusqu'à la fin.
                             if (prev === false) return false;
+
+                            // Renvoi TRUE si la case est une "casesObstacles", sinon FALSE.
                             return cellule.classList.contains('casesObstacles');
                         }
-                    )
+                    ) === false // On cherche à ce que la vérification renvoi FALSE, car ça signifie qu'il y a une case vide sur les 4 testées.
                 )
             });
             // On récupère les coordonnées de la case recevant l' arme.
@@ -92,30 +103,36 @@ class Map {
     // Méthode de positionnement des joueurs sur la map.
     insererJoueursMap(tableauJoueurs) {
         tableauJoueurs.forEach(joueur => {
-            // On récupère une case aléatoire grâce à la méthode genererCasesAleatoires, depuis la fonction `recupererCaseAleatoire`.
+            // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
             // On utilise ici `.call` pour passer le `this` à la fonction `recupererCaseAleatoire`.
             const caseJoueur = recupererCaseAleatoire.call(this, function verifieLaCase(caseGeneree) {
                 return (
-                    // Il ne faut pas que la `caseGeneree` soit déjà une `casesObstacles` ou une`casesArmes`, ou une `casesJoueurs`.
+                    // Il ne faut pas que la `caseGeneree` soit déjà une "casesObstacles" ou une "casesArmes", ou une "casesJoueurs".
                     !caseGeneree.classList.contains('casesObstacles') &&
                     !caseGeneree.classList.contains('casesArmes') &&
                     !caseGeneree.classList.contains('casesJoueurs') &&
-                    // Ni que cette case soit adjacente à une autre case joueur.
-                    !verifierCasesAdjacentes(
+                    // Ni que cette case soit adjacente à une autre "casesJoueurs".
+                    verifierCasesAdjacentes(
                         caseGeneree,
                         (cellule, prev) => {
                             if (prev === true) return true;
                             return cellule.classList.contains('casesJoueurs');
                         }
-                    ) &&
+                    ) !== true &&
                     // Ni que cette case soit encerclée de "casesObstacles".
-                    !verifierCasesAdjacentes(
+                    verifierCasesAdjacentes(
                         caseGeneree,
-                        (cellule, prev) => {
+                        (cellule, prev) => { // Si une des 4 cases autour n'est PAS une "casesObstacles", on renvoi FALSE.
+
+                            // Si une des cases précédemment vérifiée n'est "PAS" une "casesObstacles".
+                            // Alors on sait que la `caseGeneree` n'est PAS "encerclée" par les cases obstacles (vu qu'il y a, au moins, 1 case vide).
+                            // On n'a donc pas l'utilité de vérifier les cases suivantes et on renvoi false jusqu'à la fin.
                             if (prev === false) return false;
+
+                            // Renvoi TRUE si la case est une "casesObstacles", sinon FALSE.
                             return cellule.classList.contains('casesObstacles');
                         }
-                    )
+                    ) === false // On cherche à ce que la vérification renvoi FALSE, car cela signifie qu'il y a une case vide sur les 4 testées.
                 )
             });
             // On récupère l'ID de la case joueur en lui appliquant la méthode `.split`.

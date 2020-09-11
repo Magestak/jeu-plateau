@@ -44,6 +44,7 @@ class Game{
         this.afficherInfosJoueurs(this.joueurs);
 
         // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `clickCellule`.
+        // idx inutile, il est présent uniquement pour avoir accès au 2ème paramètre "cellule".
         $('td').each((idx, cellule) => cellule.addEventListener('click', this.clickCellule.bind(this)));
 
         // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.
@@ -57,10 +58,11 @@ class Game{
         return this.joueurs[this.indexJoueurActuel];
     }
     get indexJoueurActuel() {
-        return Number(this._indexJoueurActuel);
+        return this._indexJoueurActuel;
     }
     set indexJoueurActuel(idx) {
-        this._indexJoueurActuel = idx;
+        // On utilise Number() à cause de la ligne 223 (`changerJoueur`) qui fournit un "boolean" au lieu d'un "number".
+        this._indexJoueurActuel = Number(idx);
     }
     get indexAutreJoueur() {
         return this.indexJoueurActuel === 0 ? 1 : 0;
@@ -132,10 +134,10 @@ class Game{
             // Quand on arrive sur une case arme (échange des armes - non-visuel sur le plateau mais changement sur les côtés).
             const armeSuivante = this.armes.find(arme => arme.coord?.x === nouvellePositionJoueur.x && arme.coord?.y === nouvellePositionJoueur.y);
             if (armeSuivante) {
-                const armeDropee = joueur.arme;
+                const armeDeposee = joueur.arme;
                 // On remplace dans le tableau `this.armes` l'arme que va récupérer le joueur, par l'arme dont il était équipé.
-                this.armes.splice(this.armes.indexOf(armeSuivante), 1, armeDropee);
-                armeDropee.coord = nouvellePositionJoueur;
+                this.armes.splice(this.armes.indexOf(armeSuivante), 1, armeDeposee);
+                armeDeposee.coord = nouvellePositionJoueur;
                 armeSuivante.joueur = joueur;
             }
 
@@ -152,19 +154,16 @@ class Game{
         const joueurPotentiel = verifierCasesAdjacentes(
             $nouvelleCaseJoueur[0],
             (cellule, prev) => {
-                // Si la valeur précédente n'est pas un boolean (donc est une cellule).
-                if (typeof prev !== "boolean") return prev;
-                if (!cellule) return false;
+                // Si prev vaut TRUE, on renvoi TRUE
+                if (prev) return true;
 
-                // Renvoi de la cellule actuellement testée, ou de false.
-                return cellule.classList.contains("casesJoueurs")
-                        ? cellule
-                        : false;
+                // Renvoi true si la case vérifiée est une "casesJoueurs".
+                return cellule.classList.contains("casesJoueurs");
             }
         );
 
         // Si un joueur est trouvé dans les cases adjacentes
-        if (joueurPotentiel !== false) {
+        if (joueurPotentiel) {
             this.etat = ETAT_COMBAT; // On passe en état combat.
             // On affiche le message de début de combat.
             $('#debutCombat').css('display', 'block');
@@ -232,7 +231,8 @@ class Game{
         switch (this.etat) {
             case ETAT_INITIALISATION:
             default:
-                // Problem ?
+                // Appel à "finirLeTour" lorsque la game est en initialisation (case ETAT_INITIALISATION)
+                // OU dans un état inconnu (default case).
                 console.log("DEFAULT CASE !");
                 break;
             case ETAT_DEPLACEMENT:
@@ -241,9 +241,13 @@ class Game{
                 break;
             case ETAT_COMBAT:
                 console.log("FIGHT CASE !");
-                // Réactiver les boutons "Attaquer" et "Se défendre" pour les 2 joueurs.
+                // On change de joueur
                 this.changerJoueur();
+
+                // Pour chaque "paire" de boutons (1 paire par joueur)
                 this.boutons.forEach((pair, idx) => {
+                    // On désactive les boutons si ceux-ci font partie de l'objet "pair"
+                    // qui correspond au joueur dont le tour est terminé.
                     pair.attaquer[0].disabled = idx === this.indexAutreJoueur;
                     pair.defendre[0].disabled = idx === this.indexAutreJoueur;
                 });

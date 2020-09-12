@@ -3,7 +3,7 @@ class Player {
         this.nom = nom;
         this.visuel = visuel;
         this.sante = sante;
-        this.arme = new Weapon("Couteau",'<img src="../img/couteau2-min.png" alt="couteau", class="imgTableau">', 10); // Arme initiale des 2 joueurs;
+        this.arme = new Weapon("Couteau",'<img src="../img/couteau2-min.png" alt="couteau" class="imgTableau">', 10); // Arme initiale des 2 joueurs;
         this._coordonnees = {};
         this.game;
         this.bouclier = false;
@@ -18,7 +18,9 @@ class Player {
         return this._coordonnees;
     }
 
-    // Méthode pour identifier les cases potentielles pour le déplacement du joueur.
+    /**
+     * Permet de mettre en "surbrillance" les cases potentielles pour le déplacement du joueur
+     */
     casesPossiblesDeplacement() {
         let positionJoueur = this.coord;
         let $casePotentielle;

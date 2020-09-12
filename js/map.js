@@ -6,7 +6,10 @@ class Map {
         this.y = y;
         this.casesObstacles = casesObstacles;
     }
-    // Méthode de génération d'une map vide.
+
+    /**
+     * Génère une map vide
+     */
     genererMapVide() {
         // Création des lignes.
         for (let i = 0; i < this.nbLignes; i++) {
@@ -29,13 +32,20 @@ class Map {
             }
         }
     }
-    // Méthode de génération de cases aléatoires pour les autres méthodes.
+
+    /**
+     * Génère des cases aléatoires sur la map pour les autres méthodes
+     * @returns {HTMLTableDataCellElement}
+     */
     genererCasesAleatoires() {
         let cases = document.getElementsByTagName('td');
         let casesAleatoires = Math.floor(Math.random() * cases.length); // Calcul d'un nombre aléatoire.
         return cases[casesAleatoires]; // Retourne une case aléatoire dans la grille.
     }
-    // Méthode de génération des cases obstacles sur la map vide.
+
+    /**
+     * Génère les cases obstacles de la map
+     */
     genererCasesObstacles() {
         for (let i = 0; i < this.casesObstacles; i++) {
             // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
@@ -63,7 +73,11 @@ class Map {
             caseNoire.classList.add('casesObstacles');
         }
     }
-    // Méthode de positionnement des armes sur la map;
+
+    /**
+     * Positionne les armes sur la map
+     * @param { Weapon[] } tableauArmes
+     */
     insererArmesMap(tableauArmes) {
         tableauArmes.forEach(arme => {
             // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
@@ -100,7 +114,10 @@ class Map {
         });
     }
 
-    // Méthode de positionnement des joueurs sur la map.
+    /**
+     * Positionne les joueurs sur la map
+     * @param { Player[] } tableauJoueurs
+     */
     insererJoueursMap(tableauJoueurs) {
         tableauJoueurs.forEach(joueur => {
             // On récupère une case aléatoire grâce à la méthode `genererCasesAleatoires`, depuis la fonction `recupererCaseAleatoire`.
@@ -148,7 +165,9 @@ class Map {
         });
     }
 
-    // Permet d'enlever la surbrillance des cases du joueur dont le tour est terminé.
+    /**
+     * Permet d'enlever la surbrillance des cases du joueur dont le tour est terminé
+     */
     viderCasesSurbrillance() {
         $('.casesSurbrillance').each((idx, cellule) => {
             cellule.classList.remove('casesSurbrillance');

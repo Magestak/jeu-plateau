@@ -20,19 +20,18 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:modifications" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f474206b-8087-4fcf-bdb1-2a840fc40aaf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mentions-legales.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/functions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/jquery.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/weapons.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/weapons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/players.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/players.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +89,7 @@
       <workItem from="1598649252633" duration="51325000" />
       <workItem from="1599205780617" duration="54348000" />
       <workItem from="1599724201888" duration="2265000" />
-      <workItem from="1599812113586" duration="12271000" />
+      <workItem from="1599812113586" duration="18493000" />
     </task>
     <servers />
   </component>
@@ -108,7 +107,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="modifications" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>

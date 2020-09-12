@@ -61,7 +61,7 @@ class Game{
         return this._indexJoueurActuel;
     }
     set indexJoueurActuel(idx) {
-        // On utilise Number() à cause de la ligne 223 (`changerJoueur`) qui fournit un "boolean" au lieu d'un "number".
+        // On utilise Number() à cause de la ligne 229 (`changerJoueur`) qui fournit un "boolean" au lieu d'un "number".
         this._indexJoueurActuel = Number(idx);
     }
     get indexAutreJoueur() {
@@ -79,7 +79,10 @@ class Game{
         this.joueurs[this.indexJoueurActuel].casesPossiblesDeplacement();
     }
 
-    // Méthode pour la gestion de l'évènement "click" sur les cases.
+    /**
+     * Permet de gérer l'évènement "click" sur les cases pour les déplacements
+     * @param event
+     */
     clickCellule(event) {
         const cellule = event.target;
         if (!cellule.classList.contains('casesSurbrillance')) return;
@@ -220,6 +223,9 @@ class Game{
         this.finirLeTour();
     }
 
+    /**
+     * Permet de changer de joueur
+     */
     changerJoueur() {
         this.indexJoueurActuel = !this.indexJoueurActuel;
     }

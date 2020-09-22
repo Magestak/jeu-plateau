@@ -27,10 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f474206b-8087-4fcf-bdb1-2a840fc40aaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/players.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/players.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +57,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="gitlive.settings" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -89,7 +86,18 @@
       <workItem from="1598649252633" duration="51325000" />
       <workItem from="1599205780617" duration="54348000" />
       <workItem from="1599724201888" duration="2265000" />
-      <workItem from="1599812113586" duration="18493000" />
+      <workItem from="1599812113586" duration="19837000" />
+      <workItem from="1600187320314" duration="807000" />
+      <workItem from="1600683652222" duration="130000" />
+      <workItem from="1600693460862" duration="350000" />
+      <workItem from="1600696425739" duration="148000" />
+      <workItem from="1600696687234" duration="66000" />
+      <workItem from="1600697267209" duration="318000" />
+      <workItem from="1600699794781" duration="213000" />
+      <workItem from="1600714344107" duration="66000" />
+      <workItem from="1600764202146" duration="2876000" />
+      <workItem from="1600781512444" duration="4000" />
+      <workItem from="1600782629717" duration="2474000" />
     </task>
     <servers />
   </component>
@@ -253,9 +261,11 @@
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1050/-1920.63.1920.1057@0.23.1792.1050" timestamp="1598423902190" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1051/-1920.63.1920.1057@0.23.1792.1051" timestamp="1598423240897" />
     <state width="1733" height="352" key="GridCell.Tab.3.right/0.23.1792.1052/-1920.63.1920.1057@0.23.1792.1052" timestamp="1598455008395" />
-    <state x="397" y="185" key="SettingsEditor" timestamp="1598641240333">
-      <screen x="0" y="23" width="1792" height="1047" />
+    <state x="397" y="184" key="SettingsEditor" timestamp="1600714383425">
+      <screen x="0" y="23" width="1792" height="1041" />
     </state>
+    <state x="397" y="183" key="SettingsEditor/0.23.1792.1037@0.23.1792.1037" timestamp="1600696507886" />
+    <state x="397" y="184" key="SettingsEditor/0.23.1792.1041@0.23.1792.1041" timestamp="1600714383425" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1046/-1920.63.1920.1057@0.23.1792.1046" timestamp="1598598294452" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1047/-1920.63.1920.1057@0.23.1792.1047" timestamp="1598641240333" />
     <state x="397" y="185" key="SettingsEditor/0.23.1792.1047@0.23.1792.1047" timestamp="1598046440018" />

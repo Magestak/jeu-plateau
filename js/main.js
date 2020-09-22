@@ -25,5 +25,6 @@ $(document).ready(function () {
     $('#demarrer').on('click', function () {
         $('#ecranDepart').fadeOut('slow'); // L'écran de démarrage disparait.
         partie.demarrer(); // La partie démarre.
+        $('table').focus();
     });
 });

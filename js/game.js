@@ -34,7 +34,7 @@ class Game{
         this.map.genererMapVide(); // Génère une map vide.
         this.map.genererCasesObstacles(); // Rajoute des cases obstacles sur la map vide.
 
-        // Insertion des armes dans la map.
+        // Insertion des armes dans la map. 
         this.map.insererArmesMap(this.armes);
 
         // Insertion des joueurs dans la map.
@@ -46,6 +46,10 @@ class Game{
         // Utilisation du .bind pour garder le `this` lors de l'éxecution de la méthode `clickCellule`.
         // idx inutile, il est présent uniquement pour avoir accès au 2ème paramètre "cellule".
         $('td').each((idx, cellule) => cellule.addEventListener('click', this.clickCellule.bind(this)));
+
+        // On écoute les relâchements de touche sur le document.
+        // On utilise ici l'événement 'keyup' pour éviter le déclenchement multiple sur une pression de touche malencontreusement un peu longue.
+        document.addEventListener('keyup', this.moveFromKeyboard.bind(this));
 
         // Initialisation des boutons `Attaquer` et `Se défendre` pour les joueurs.
         this.boutons.forEach(pair => {
@@ -61,7 +65,7 @@ class Game{
         return this._indexJoueurActuel;
     }
     set indexJoueurActuel(idx) {
-        // On utilise Number() à cause de la ligne 229 (`changerJoueur`) qui fournit un "boolean" au lieu d'un "number".
+        // On utilise Number() à cause de la ligne 272 (`changerJoueur`) qui fournit un "boolean" au lieu d'un "number".
         this._indexJoueurActuel = Number(idx);
     }
     get indexAutreJoueur() {
@@ -87,10 +91,47 @@ class Game{
         const cellule = event.target;
         if (!cellule.classList.contains('casesSurbrillance')) return;
         if (this.etat !== ETAT_DEPLACEMENT) return;
-        
-        const joueurActuel = this.joueurs[this.indexJoueurActuel];
 
-        this.deplacer(joueurActuel, cellule);
+        this.deplacer(this.joueurActuel, cellule);
+    }
+
+    /**
+     * Déplace le joueur en fonction de la touche relâchée.
+     * @param { KeyboardEvent } event
+     */
+    moveFromKeyboard(event) {
+        // Si la game n'est pas en état de déplacement des joueurs, on ne va pas plus loin.
+        if (this.etat !== ETAT_DEPLACEMENT) return;
+
+        // On récupère le joueur actuel ainsi que ses coordonnées.
+        const joueur = this.joueurActuel;
+        let { x, y } = joueur.coord;
+
+        // On récupère le code de la touche relâchée.
+        const { code } = event;
+
+        // On retire 1 sur l'axe correspondant à la touche relâchée (négatif = gauche ou haut, positif = droite ou bas).
+        switch (code) {
+            case "ArrowUp": // Flèche du haut
+                y -= 1;
+                break;
+            case "ArrowDown": // Flèche du bas
+                y += 1;
+                break;
+            case "ArrowLeft": // Flèche de gauche
+                x -= 1;
+                break;
+            case "ArrowRight": // Flèche de droite
+                x += 1;
+                break;
+        }
+
+        // On récupère la cellule correspondant à la 1ère cellule rencontrée dans la direction de la touche relachée.
+        const cellule = $(`#${x}-${y}`);
+        
+        // Si une cellule existe aux coordonnées générées
+        if (cellule.length > 0)
+            this.deplacer(joueur, cellule[0]); // On déplace le joueur sur la cellule.
     }
 
     /**
@@ -99,6 +140,8 @@ class Game{
      * @param { HTMLElement } cellule
      */
     deplacer(joueur, cellule) {
+        if (cellule.classList.contains('casesObstacles') || cellule.classList.contains('casesJoueurs')) return;
+
         // On efface les cases en surbrillance.
         this.map.viderCasesSurbrillance();
 
